@@ -11855,5 +11855,38 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+img.img-themed {
+  object-fit: cover;
+  object-position: top;
+}
+
+[data-bs-theme=dark] img.img-themed {
+  object-position: bottom;
+}
+
+[data-bs-theme-switch] svg {
+  pointer-events: none;
+}
+[data-bs-theme-switch] svg.fa-brightness {
+  color: var(--bs-warning);
+}
+[data-bs-theme-switch] svg.fa-moon {
+  color: var(--bs-info);
+}
+
+[data-bs-theme=dark] svg.fa-brightness {
+  display: none;
+}
+
+[data-bs-theme=light] svg.fa-moon {
+  display: none;
+}
+
+.navbar-search input {
+  border-radius: 50rem 0 0 50rem;
+}
+.navbar-search button {
+  border-radius: 0 50rem 50rem 0;
+}
 
 /*# sourceMappingURL=theme.css.map */

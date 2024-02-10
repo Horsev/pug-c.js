@@ -1,0 +1,36 @@
+header.d-print-none
+  nav.navbar.navbar-expand.bg-body.mb-2
+    .container-fluid.d-flex.justify-content-between
+      a.navbar-brand(href="#")
+        img.img-themed(
+          src="https://assets.codepen.io/1959313/odb-logo-themed.webp",
+          alt="Опендатабот",
+          width="166",
+          height="32"
+          )
+      form.mx-auto.d-print-none
+        .input-group.navbar-search
+          input.form-control(
+            type="text",
+            list="datalistOptions",
+            placeholder="Код компанії, ІПН або код земельної ділянки",
+            aria-label="Код компанії, ІПН або код земельної ділянки",
+            size="32",
+            value=""
+          )
+          datalist#datalistOptions
+            option(value="30487219") ТОВ "АТБ-МАРКЕТ"
+            option(value="14360570") АТ КБ "ПРИВАТБАНК"
+            option(value="33422484") ТОВ "ПРАВИЛЬНІ РІШЕННЯ"
+          button#search-by-code.btn.px-md-3.btn-primary(
+            title="Пошук",
+            type="button"
+          )
+            i.far.fa-search
+
+      button.btn.m-2.ms-auto(data-bs-theme-switch)
+        i.far.fa-fw.fa-brightness
+        i.far.fa-fw.fa-moon
+
+      a.btn.btn-link.d-print-none(href="/logout", aria-label="logout")
+        i.far.fa-arrow-right-from-bracket

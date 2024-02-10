@@ -6,3 +6,32 @@
 @import "../node_modules/bootstrap/scss/bootstrap"
 
 // Then add additional custom code here
+img.img-themed
+  object-fit: cover
+  object-position: top
+
+[data-bs-theme=dark]
+  img.img-themed
+    object-position: bottom
+
+[data-bs-theme-switch]
+  svg
+    pointer-events: none
+    &.fa-brightness
+      color: var(--bs-warning)
+    &.fa-moon
+      color: var(--bs-info)
+
+[data-bs-theme="dark"]
+  svg.fa-brightness
+    display: none
+
+[data-bs-theme="light"]  
+  svg.fa-moon
+    display: none
+
+.navbar-search
+  input
+    border-radius: 50rem 0 0 50rem
+  button
+    border-radius: 0 50rem 50rem 0
