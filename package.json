@@ -1,15 +1,15 @@
 {
-  "name": "test1",
+  "name": "pug-c",
   "version": "1.0.0",
-  "description": "special for WEB technology",
+  "description": "Opendatabot company",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "00008699",
+  "author": "Andrey Horsev",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "pug": "^2.0.4"
+    "express": "^4.0.0",
+    "pug": "^3.0.0"
   }
 }
