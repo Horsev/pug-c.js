@@ -5,11 +5,12 @@ mixin container
     block
 
 block content
-  +container
-    hgroup.text-center
-      p.mb-0.text-body-tertiary Код ЄДРПОУ
-      h1.fs-2= data.edrpou
-    h2.fs-1.fw-bolder.text-center= data.companyName
-    dl.text-center
-      dt.text-body-tertiary.fw-normal.mb-0 Директор
-      dd= data.director
+  .container
+    +container
+      hgroup.text-center
+        p.mb-0.text-body-tertiary Код ЄДРПОУ
+        h1.fs-2= data.edrpou
+      h2.fs-1.fw-bolder.text-center= data.companyName
+      dl.text-center
+        dt.text-body-tertiary.fw-normal.mb-0 Директор
+        dd= data.director
