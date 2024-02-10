@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon --env-file=config.env app.js"
   },
   "author": "Andrey Horsev",
   "license": "ISC",
