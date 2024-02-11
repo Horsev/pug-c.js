@@ -11855,6 +11855,15 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+menu {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+menu li {
+  display: inline;
+}
+
 img.img-themed {
   object-fit: cover;
   object-position: top;
@@ -11882,11 +11891,15 @@ img.img-themed {
   display: none;
 }
 
-.navbar-search input {
+.odb-navbar-search input {
   border-radius: 50rem 0 0 50rem;
 }
-.navbar-search button {
+.odb-navbar-search button {
   border-radius: 0 50rem 50rem 0;
+}
+
+.odb-payment-system {
+  height: 1em;
 }
 
 /*# sourceMappingURL=theme.css.map */

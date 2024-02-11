@@ -15,3 +15,20 @@ block content
       dl.text-center
         dt.text-body-tertiary.fw-normal.mb-0 Директор
         dd= data.director
+
+      .text-center
+        menu.d-flex.flex-column.flex-sm-row.justify-content-center.d-print-none
+          li
+            button.btn.btn-lg.btn-primary.m-2(type="button")
+              i.far.fa-file-pdf.me-2
+              | Витяг з ЄДР
+
+          li
+            button.btn.btn-lg.m-2(type="button")
+              i.far.fa-fw.fa-circle-notch.me-2.fa-spin
+              | Статут
+
+        img.odb-payment-system.m-2.fs-1.d-print-none(
+          src="/img/payment-systems.svg",
+          alt="Платіжні системи"
+        )
