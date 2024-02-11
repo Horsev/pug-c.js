@@ -1,6 +1,6 @@
 import express, { static as staticFolder } from "express";
 // eslint-disable-next-line import/extensions
-import createCPage from "./server/c.js";
+import createCPage from "./pages/c.js";
 
 const { PORT } = process.env;
 const { log } = console;

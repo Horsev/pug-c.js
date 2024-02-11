@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import toHryvnas from "../helpers/data.js";
+import toHryvnas from "../helpers/numbers.js";
 
 const botContent = "source_c-info_42011402";
 
@@ -39,7 +39,7 @@ const config = {
   stores,
 };
 
-const mapper = (registry) => ({
+const mapperFullCompany = (registry) => ({
   companyName: registry.shortName || registry.fullName,
   edrpou: registry.code,
   director: registry.ceoName,
@@ -58,9 +58,9 @@ const faqMapper = ({ companyName, edrpou, capital }) => [
 ];
 
 const fullCompany = ({ registry }) => ({
-  data: mapper(registry),
+  data: mapperFullCompany(registry),
   config,
-  faq: faqMapper(mapper(registry)),
+  faq: faqMapper(mapperFullCompany(registry)),
 });
 
 export default fullCompany;

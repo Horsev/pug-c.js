@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import fullCompany from "../config/c.js";
+import fullCompany from "../data/c.js";
 
 const { APIKEY, API_DOMAIN, API_PATH } = process.env;
 
@@ -13,6 +13,7 @@ const createCPage = async (req, res) => {
 
   const response = await fetch(endpoint);
   const { data } = await response.json();
+
   res.render("c.pug", fullCompany(data));
 };
 
