@@ -6,7 +6,7 @@ mixin container
 
 block content
   include ../components/header.pug
-  .container
+  .container.mb-3
     +container
       hgroup.text-center
         p.mb-0.text-body-tertiary Код ЄДРПОУ
@@ -34,3 +34,7 @@ block content
         )
     +container
       include ../components/promotion.pug
+
+  .container.mb-3
+    include ../components/faq.pug
+    include ../components/footer.pug

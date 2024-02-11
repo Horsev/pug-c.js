@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --env-file=config.env app.js -e js,pug,sass",
+    "prettier:pug": "npx prettier --write \"**/*.pug\"",
     "watch:sass": "sass --watch ./scss/theme.sass ./public/css/theme.css"
   },
   "author": "Andrey Horsev",

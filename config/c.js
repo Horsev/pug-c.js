@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/extensions
+import toHryvnas from "../helpers/data.js";
+
 const botContent = "source_c-info_42011402";
 
 const messengers = [
@@ -40,11 +43,24 @@ const mapper = (registry) => ({
   companyName: registry.shortName || registry.fullName,
   edrpou: registry.code,
   director: registry.ceoName,
+  capital: toHryvnas(registry.capital),
 });
+
+const faqMapper = ({ companyName, edrpou, capital }) => [
+  {
+    q: `Який ЄДРПОУ компанії ${companyName}?`,
+    a: `Згідно з даними Єдиного державного реєстру юридичних осіб, фізичних осіб-підприємців та громадських формувань код ЄДРПОУ ${companyName} — ${edrpou}.`,
+  },
+  {
+    q: `Який статутний капітал у ${companyName}?`,
+    a: `Згідно з даними Єдиного державного реєстру юридичних осіб, фізичних осіб-підприємців та громадських формувань статутний капітал компанії ${companyName} складає ${capital}`,
+  },
+];
 
 const fullCompany = ({ registry }) => ({
   data: mapper(registry),
   config,
+  faq: faqMapper(mapper(registry)),
 });
 
 export default fullCompany;

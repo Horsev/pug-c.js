@@ -1,0 +1,19 @@
+.mb-3
+  #odbFAQ.accordion.accordion-flush.mb-2
+    each item, id in faq 
+      .accordion-item
+        h2.accordion-header
+          button.accordion-button.collapsed(
+            type="button",
+            data-bs-toggle="collapse",
+            data-bs-target=`#odb-flush-collapse-${id}`,
+            aria-expanded="false",
+            aria-controls=`odb-flush-collapse-${id}`
+          )
+            =item.q
+        .accordion-collapse.collapse(
+          id=`odb-flush-collapse-${id}`,
+          data-bs-parent="#odbFAQ"
+        )
+          .accordion-body
+            =item.a
