@@ -1,6 +1,6 @@
 import express, { static as staticFolder } from "express";
 // eslint-disable-next-line import/extensions
-import createCPage from "./pages/c.js";
+import createCompanyPage from "./pages/c.js";
 
 const { PORT } = process.env;
 const { log } = console;
@@ -13,6 +13,6 @@ app.set("view engine", "pug");
 
 app.use(staticFolder("public"));
 
-app.get("/c/:code", createCPage);
+app.get("/c/:code", createCompanyPage);
 
 app.listen(PORT, log(startingMessage));
