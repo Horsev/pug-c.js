@@ -16,14 +16,14 @@ const messengers = [
 
 const stores = [
   {
-    src: "https://opendatabot.ua/_nuxt/appstore.f34e9a2.svg",
+    src: "/img/appstore-apple.svg",
     href: "https://apps.apple.com/ua/app/опендатабот/id1463927156",
     width: "135",
     height: "40",
     alt: "Appstore",
   },
   {
-    src: "https://opendatabot.ua/_nuxt/googleplay.c83af8e.svg",
+    src: "/img/appstore-google.svg",
     href: "https://play.google.com/store/apps/details?id=ua.opendatabot&hl=uk",
     width: "135",
     height: "40",
