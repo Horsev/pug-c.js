@@ -1,0 +1,24 @@
+aside.text-center.p-4
+  .mb-3
+    .fs-1 Опендатабот
+    p.lead
+      | Опендатабот&nbsp;&mdash; сервіс моніторингу реєстраційних даних українських компаній та судового реєстру для захисту від рейдерських захоплень і контролю контрагентів.
+      
+  .mb-3
+    .fs-2 Перевірити компанію
+    p.lead Додайте Опендатабот до улюбленого месенджеру
+
+    menu.d-flex.justify-content-center
+      each messenger in config.messengers
+        li
+          a.btn.btn-dark.m-1(href=messenger.url)
+            img.me-1(src=messenger.src, alt=messenger.name, width="24", height="24")
+            span.align-middle= messenger.name
+
+  .mb-3
+    p.lead Опендатабот для телефону
+    menu.d-flex.justify-content-center
+      each store in config.stores
+        li
+          a(href=store.href, aria-label='Установити з ' + store.alt)
+            img.m-1(src=store.src, width=store.width, height=store.height, alt=store.alt)

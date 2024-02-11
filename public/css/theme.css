@@ -11855,6 +11855,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+:root {
+  --fa-animation-duration: 1s;
+}
+
 menu {
   list-style: none;
   padding-inline-start: 0;

@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon --env-file=config.env app.js",
+    "start": "nodemon --env-file=config.env app.js -e js,pug,sass",
     "watch:sass": "sass --watch ./scss/theme.sass ./public/css/theme.css"
   },
   "author": "Andrey Horsev",
