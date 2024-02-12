@@ -11859,6 +11859,14 @@ textarea.form-control-lg {
   --fa-animation-duration: 1s;
 }
 
+i.far, .svg-inline--fa {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
 menu {
   list-style: none;
   padding-inline-start: 0;

@@ -1,13 +1,16 @@
 import express, { static as staticFolder } from "express";
 // eslint-disable-next-line import/extensions
 import createCompanyPage from "./pages/c.js";
+import compression from "compression";
 
 const { PORT } = process.env;
 const { log } = console;
 
 const app = express();
 
-const startingMessage = `Server is running on http://localhost:${PORT}/c/00034074`;
+app.use(compression());
+
+const startingMessage = `\nServer is running on http://localhost:${PORT}/c/00034074\n`;
 
 app.set("view engine", "pug");
 
