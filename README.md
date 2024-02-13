@@ -7,6 +7,6 @@
 ```ini
 API_DOMAIN=https://opendatabot.com
 API_PATH=/api/v3/full-company-open-data
-APIKEY=
+APIKEY= # your api key
 PORT=8080
 ```
