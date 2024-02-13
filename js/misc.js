@@ -28,8 +28,8 @@
 
   if (query) {
     try {
-      code = searchInput.getAttribute("odb-code");
-      description = searchInput.getAttribute("odb-description");
+      code = searchInput.getAttribute("data-odb-code");
+      description = searchInput.getAttribute("data-odb-description");
     } catch {
       // Do nothig
     } finally {
