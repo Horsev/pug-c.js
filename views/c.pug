@@ -3,6 +3,9 @@ extends layout.pug
 mixin section
   section.bg-body.rounded.p-3.mb-2
     block
+mixin container
+  .bg-body.rounded.p-3.mb-2
+    block    
 
 block content
   .container
@@ -10,7 +13,7 @@ block content
   .container.mb-3
     +section
       include ../components/jambatron.pug
-    +section
+    +container
       include ../components/promotion.pug
 
   .container.mb-3
