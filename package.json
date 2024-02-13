@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon --env-file=config.env server.js -e js,pug,sass",
     "prettier:pug": "npx prettier --write \"**/*.pug\"",
-    "watch:sass": "sass --watch ./scss/theme.sass ./public/css/theme.css"
+    "watch:sass": "sass --watch ./scss/theme.sass ./public/css/theme.css --style compressed"
   },
   "author": "Andrey Horsev",
   "license": "ISC",
