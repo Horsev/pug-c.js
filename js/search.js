@@ -8,6 +8,32 @@
     const reCompanyCode = /^\d{8}$/;
 
     if (!query || !reCompanyCode.test(query)) {
+      if (query) {
+        const shakeForm = new Promise((resolve) => {
+          searchForms.forEach((form) => {
+            form.classList.remove("shake");
+            form.classList.add("shake");
+          });
+
+          setTimeout(() => {
+            resolve();
+          }, 500);
+        });
+
+        const showHelpLink = () => {
+          searchForms.forEach((form) => {
+            form.classList.remove("shake");
+            const { Collapse } = window.bootstrap;
+            const helpLink = new Collapse("#helpLink", {
+              toggle: true,
+            });
+            helpLink.show();
+          });
+        };
+
+        shakeForm.then(showHelpLink);
+      }
+
       event.preventDefault();
       return;
     }

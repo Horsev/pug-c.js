@@ -1,15 +1,15 @@
-header.d-print-none
+header
   nav.navbar.navbar-light.navbar-expand
     .container-fluid.d-block.px-0
-      .d-flex.align-items-center.px-3.py-2
-        a.navbar-brand.d-print-inline-block.odb-navbar-brand(href="/")
+      .d-flex.align-items-top.p-2
+        a.navbar-brand.odb-navbar-brand(href="/", style="padding-top: 0.125rem")
           img.odb-img-themed(
             src="/img/odb-logo-themed.webp",
             alt="Опендатабот",
             height="32",
             width="166"
           )
-        form.odb-search-by-code.d-flex.mx-auto.d-print-none(action="/")
+        form.odb-search-by-code.mx-auto.d-print-none(action="/")
           .odb-navbar-search.input-group
             input.odb-search.form-control.ps-3(
               name="odb-search",
@@ -26,6 +26,11 @@ header.d-print-none
 
             button.btn.px-md-3.btn-primary(title="Пошук", type="submit")
               i.far.fa-search
+          .collapse#helpLink
+            a.btn.btn-link(data-bs-toggle='collapse' href='#help' role='button' aria-expanded='false' aria-controls='help')
+              | Я пошук працює? 
+
+
         .p-1
         a.btn.btn-link.ms-auto.d-print-none(
           href="/logout",
@@ -33,3 +38,48 @@ header.d-print-none
           rel="nofollow"
         )
           i.far.fa-arrow-right-from-bracket
+
+    
+      //- #help.collapse
+        .card.card-body.border.rounded.p-4
+          p Опендатабот дозволяє здійснювати пошук за різними ключовими параметрами, що дає змогу користувачам легко знаходити інформацію про компанії, фізичних осіб-підприємців, земельні ділянки та інші об'єкти в базах даних:
+          ol 
+            li Код компанії (ЄДРПОУ)
+              ul
+                li Що це таке: ЄДРПОУ (Єдиний державний реєстр підприємств та організацій України) — це унікальний код, який отримує кожна компанія або організація при реєстрації.
+                li Формат: Код складається з 8 цифр.
+
+            li ІПН (Ідентифікаційний номер платника податків)
+              ul
+                li Що це таке: Ідентифікаційний номер платника податків (ІПН) — це унікальний номер, який отримує кожна фізична особа або фізична особа-підприємець для ведення податкового обліку.
+                li Формат: ІПН складається з 10 цифр.
+
+            li Код земельної ділянки
+              ul 
+                li Що це таке: Кожна земельна ділянка в Україні має унікальний кадастровий номер, який використовується для її ідентифікації в Державному земельному кадастрі.
+                li Формат: Кадастровий номер складається з 13 цифр, розділених двокрапками.
+
+
+  style.
+    .shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    }
+
+    @keyframes shake {
+    10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+    transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+    transform: translate3d(4px, 0, 0);
+    }
+    }
+
