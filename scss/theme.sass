@@ -29,12 +29,12 @@ menu
   li
     display: inline
 
-img.img-themed
+img.odb-img-themed
   object-fit: cover
   object-position: top
 
 [data-bs-theme=dark]
-  img.img-themed
+  img.odb-img-themed
     object-position: bottom
 
 .odb-navbar-brand
@@ -43,7 +43,7 @@ img.img-themed
   width: 32px
   transition: width 250ms
 
-@media (min-width: 576px)
+@media (min-width: 768px)
   .odb-navbar-brand
     width: 166px
 
@@ -63,11 +63,19 @@ img.img-themed
   svg.fa-moon
     display: none
 
+.odb-payment-system
+  height: 1em
+
 .odb-navbar-search
   input
     border-radius: 50rem 0 0 50rem
   button
     border-radius: 0 50rem 50rem 0
 
-.odb-payment-system
-  height: 1em
+@media (min-width: 992px)
+  .odb-search
+    width: 36rem!important
+
+@media (min-width: 768px)
+  .odb-search
+    width: 20rem

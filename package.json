@@ -1,6 +1,6 @@
 {
   "name": "pug-c",
-  "version": "1.0.0",
+  "version": "5.0.0",
   "description": "Opendatabot company",
   "main": "index.js",
   "type": "module",

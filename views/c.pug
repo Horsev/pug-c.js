@@ -5,7 +5,8 @@ mixin section
     block
 
 block content
-  include ../components/header.pug
+  .container
+    include ../components/header.pug
   .container.mb-3
     +section
       include ../components/jambatron.pug

@@ -1,32 +1,35 @@
-header.d-print-none.mb-2
-  nav.navbar.navbar-expand.bg-body
-    .container-fluid.d-flex.justify-content-between
-      a.navbar-brand.odb-navbar-brand(href="#")
-        img.img-themed(
-          src="/img/odb-logo-themed.webp",
-          alt="Опендатабот",
-          width="166",
-          height="32"
-        )
-      form.mx-auto.d-print-none.me-2
-        .input-group.odb-navbar-search
-          input.form-control(
-            type="text",
-            list="datalistOptions",
-            placeholder="Код компанії, ІПН або код земельної ділянки",
-            aria-label="Код компанії, ІПН або код земельної ділянки",
-            size="32",
-            value=""
+header.d-print-none
+  nav.navbar.navbar-light.navbar-expand
+    .container-fluid.d-block.px-0
+      .d-flex.align-items-center.px-3.py-2
+        a.navbar-brand.d-print-inline-block.odb-navbar-brand(href="/")
+          img.odb-img-themed(
+            src="/img/odb-logo-themed.webp",
+            alt="Опендатабот",
+            height="32",
+            width="166"
           )
-          datalist#datalistOptions
-            option(value="30487219") ТОВ "АТБ-МАРКЕТ"
-            option(value="14360570") АТ КБ "ПРИВАТБАНК"
-            option(value="33422484") ТОВ "ПРАВИЛЬНІ РІШЕННЯ"
-          button#search-by-code.btn.px-md-3.btn-primary(
-            title="Пошук",
-            type="button"
-          )
-            i.far.fa-search
+        form.odb-search-by-code.d-flex.mx-auto.d-print-none(action="/")
+          .odb-navbar-search.input-group
+            input.odb-search.form-control.ps-3(
+              name="odb-search",
+              type="search",
+              list="suggestions",
+              placeholder="Код компанії, ІПН або код земельної ділянки",
+              aria-label="Пошук",
+              size="32",
+              value=""
+              odb-code=data.edrpou
+              odb-description=data.companyName
+            )
+            datalist#suggestions
 
-      a.btn.btn-link.d-print-none.ms-auto(href="/logout", aria-label="logout")
-        i.far.fa-arrow-right-from-bracket
+            button.btn.px-md-3.btn-primary(title="Пошук", type="submit")
+              i.far.fa-search
+        .p-1
+        a.btn.btn-link.ms-auto.d-print-none(
+          href="/logout",
+          aria-label="logout",
+          rel="nofollow"
+        )
+          i.far.fa-arrow-right-from-bracket
