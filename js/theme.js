@@ -5,6 +5,11 @@
  */
 
 (() => {
+  const themes = {
+    light: "#f8f9fa",
+    dark: "#2b3035",
+  };
+
   const getStoredTheme = () => localStorage.getItem("theme");
   const setStoredTheme = (theme) => localStorage.setItem("theme", theme);
 
@@ -20,13 +25,21 @@
   };
 
   const setTheme = (theme) => {
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+
     if (
       theme === "auto" &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
       document.documentElement.setAttribute("data-bs-theme", "dark");
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute("content", themes.dark);
+      }
     } else {
       document.documentElement.setAttribute("data-bs-theme", theme);
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute("content", themes[theme]);
+      }
     }
   };
 

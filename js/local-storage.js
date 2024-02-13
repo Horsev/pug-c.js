@@ -37,13 +37,15 @@
     }
   }
 
-  if (newSuggestions && datalist) {
-    newSuggestions.forEach((suggestion) => {
-      const option = document.createElement("option");
-      option.value = suggestion.code;
-      option.innerText = suggestion.description || "";
+  const renderOptions = (suggestion) => {
+    const option = document.createElement("option");
+    option.value = suggestion.code;
+    option.innerText = suggestion.description || "";
 
-      datalist.appendChild(option);
-    });
+    datalist.appendChild(option);
+  };
+
+  if (newSuggestions && datalist) {
+    newSuggestions.forEach(renderOptions);
   }
 })();
