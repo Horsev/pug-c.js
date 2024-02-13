@@ -25,7 +25,7 @@
             form.classList.remove("shake");
             const { Collapse } = window.bootstrap;
             const helpLink = new Collapse("#helpLink", {
-              toggle: true,
+              toggle: false,
             });
             helpLink.show();
           });
