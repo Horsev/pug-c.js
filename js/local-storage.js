@@ -16,18 +16,9 @@
 
   const datalist = document.querySelector("datalist#suggestions");
 
-  if (suggestions && datalist) {
-    suggestions.forEach((suggestion) => {
-      const option = document.createElement("option");
-      option.value = suggestion.code;
-      option.innerText = suggestion.description || "";
-
-      datalist.appendChild(option);
-    });
-  }
-
   let code = "";
   let description = "";
+  let newSuggestions = [];
 
   if (query) {
     try {
@@ -37,12 +28,22 @@
       // Do nothig
     } finally {
       if (query === code) {
-        const newSuggestions = suggestions.filter(
+        newSuggestions = suggestions.filter(
           (suggestion) => suggestion.code !== code,
         );
         newSuggestions.unshift({ code, description });
         saveSuggestions(newSuggestions);
       }
     }
+  }
+
+  if (newSuggestions && datalist) {
+    newSuggestions.forEach((suggestion) => {
+      const option = document.createElement("option");
+      option.value = suggestion.code;
+      option.innerText = suggestion.description || "";
+
+      datalist.appendChild(option);
+    });
   }
 })();
