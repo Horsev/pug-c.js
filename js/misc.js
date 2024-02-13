@@ -12,14 +12,12 @@
 
   const suggestions = readSuggestions();
   const datalist = document.querySelector("datalist#suggestions");
-  console.log(datalist);
 
   if (suggestions && datalist) {
     suggestions.forEach((suggestion) => {
       const option = document.createElement("option");
       option.value = suggestion.code;
       option.innerText = suggestion.description || "";
-      console.log("option", option);
 
       datalist.appendChild(option);
     });
@@ -39,9 +37,7 @@
         const newSuggestions = suggestions.filter(
           (suggestion) => suggestion.code !== code,
         );
-
         newSuggestions.unshift({ code, description });
-
         saveSuggestions(newSuggestions);
       }
     }
