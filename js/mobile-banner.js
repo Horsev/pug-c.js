@@ -12,7 +12,6 @@
 
   const isMobileBanner = readItem("isMobileBanner")({
     isShow: true,
-    lastShow: 0,
   });
 
   const { isShow } = isMobileBanner;
@@ -20,6 +19,7 @@
   if (!isShow) return;
 
   const saveMobileBannerStatus = saveItem("isMobileBanner");
+  saveMobileBannerStatus({ isShow: true });
 
   const { Collapse } = window.bootstrap;
   const collapsed = new Collapse("#odb-open-in-app", {
@@ -29,16 +29,8 @@
   const closeButton = document.querySelector("button[aria-label=Close]");
   closeButton.addEventListener("click", () => {
     collapsed.hide();
-    saveMobileBannerStatus({
-      isShow: false,
-      lastShow: Date.now(),
-    });
+    saveMobileBannerStatus({ isShow: false });
   });
 
   collapsed.show();
-
-  saveMobileBannerStatus({
-    isShow: true,
-    lastShow: Date.now(),
-  });
 })();
