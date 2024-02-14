@@ -15,7 +15,8 @@
     "bootstrap": "^5.3.2",
     "compression": "^1.7.4",
     "express": "^4.0.0",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "uglify-js": "^3.17.4"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^3.0.0",
