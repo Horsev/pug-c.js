@@ -15,22 +15,22 @@
   });
 
   const { isShow } = isMobileBanner;
+  const banner = document.querySelector("#odb-open-in-app");
+  const closeButton = document.querySelector("button[aria-label=Close]");
 
-  if (!isShow) return;
+  if (!isShow) {
+    banner.classList.add("d-none");
+  }
 
   const saveMobileBannerStatus = saveItem("isMobileBanner");
-  saveMobileBannerStatus({ isShow: true });
 
   const { Collapse } = window.bootstrap;
   const collapsed = new Collapse("#odb-open-in-app", {
     toggle: false,
   });
 
-  const closeButton = document.querySelector("button[aria-label=Close]");
   closeButton.addEventListener("click", () => {
     collapsed.hide();
     saveMobileBannerStatus({ isShow: false });
   });
-
-  collapsed.show();
 })();
