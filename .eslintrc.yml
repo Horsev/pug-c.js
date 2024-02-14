@@ -9,3 +9,6 @@ parserOptions:
   sourceType: module
 rules:
   prettier/prettier: error
+  "no-magic-numbers":
+    - "error"
+    - "ignore": [0, 1]
