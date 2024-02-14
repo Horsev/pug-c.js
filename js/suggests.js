@@ -20,7 +20,7 @@
 
   let code = "";
   let description = "";
-  let newSuggestions = [];
+  let newSuggestions = suggestions;
 
   if (query) {
     try {
