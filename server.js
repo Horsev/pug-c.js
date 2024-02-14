@@ -1,7 +1,7 @@
 import express, { static as staticFolder } from "express";
 import compression from "compression";
 // eslint-disable-next-line import/extensions
-import createCompanyPage from "./pages/c.js";
+import createCompanyPage from "./api/c.js";
 
 const { PORT } = process.env;
 const { log } = console;

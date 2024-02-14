@@ -32,6 +32,7 @@
           (suggestion) => suggestion.code !== code,
         );
         newSuggestions.unshift({ code, description });
+        newSuggestions = newSuggestions.slice(0, 100);
         saveSuggestions(newSuggestions);
       }
     }
