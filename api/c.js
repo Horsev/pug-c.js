@@ -20,7 +20,7 @@ const createCompanyPage = async (request, result) => {
   } catch {
     templateData = {
       error: true,
-      message: "Backend unrechable",
+      message: "Сервіс тимчасово недоступний",
     };
   } finally {
     const template = templateData.error ? "error.pug" : "c.pug";
