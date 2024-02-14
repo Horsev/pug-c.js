@@ -9,27 +9,26 @@ header
             height="32",
             width="166"
           )
-        if !data.error
-          form.odb-search-by-code.mx-auto.d-print-none(action="/")
-            .odb-navbar-search.input-group
-              input.odb-search.form-control.ps-3(
-                name="odb-search",
-                type="search",
-                list="suggestions",
-                placeholder="Код компанії, ІПН або код земельної ділянки",
-                aria-label="Пошук",
-                size="32",
-                value=""
-                data-odb-code=data.edrpou
-                data-odb-description=data.companyName
-              )
-              datalist#suggestions
+        form.odb-search-by-code.mx-auto.d-print-none(action="/")
+          .odb-navbar-search.input-group
+            input.odb-search.form-control.ps-3(
+              name="odb-search",
+              type="search",
+              list="suggestions",
+              placeholder="Код компанії, ІПН або код земельної ділянки",
+              aria-label="Пошук",
+              size="32",
+              value=""
+              data-odb-code=data.edrpou
+              data-odb-description=data.companyName
+            )
+            datalist#suggestions
 
-              button.btn.px-md-3.btn-primary(title="Пошук", type="submit")
-                i.far.fa-search
-            .collapse#helpLink
-              a.btn.btn-link(href='#help')
-                | Як пошук працює? 
+            button.btn.px-md-3.btn-primary(title="Пошук", type="submit")
+              i.far.fa-search
+          .collapse#helpLink
+            a.btn.btn-link(href='#help')
+              | Як пошук працює? 
 
 
         .p-1
