@@ -1,4 +1,6 @@
 (() => {
+  const MAX_SUGGESTIONS = 100;
+
   const params = new URLSearchParams(document.location.search);
   const query = params.get("odb-search");
 
@@ -32,7 +34,7 @@
           (suggestion) => suggestion.code !== code,
         );
         newSuggestions.unshift({ code, description });
-        newSuggestions = newSuggestions.slice(0, 100);
+        newSuggestions = newSuggestions.slice(0, MAX_SUGGESTIONS);
         saveSuggestions(newSuggestions);
       }
     }
