@@ -15,9 +15,11 @@
             form.classList.add("shake");
           });
 
+          const SHAKE_DELAY = 500;
+
           setTimeout(() => {
             resolve();
-          }, 500);
+          }, SHAKE_DELAY);
         });
 
         const showHelpLink = () => {
