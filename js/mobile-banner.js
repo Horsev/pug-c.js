@@ -29,8 +29,10 @@
     toggle: false,
   });
 
-  closeButton.addEventListener("click", () => {
+  const closeBannerAndSaveStatus = () => {
     collapsed.hide();
-    saveMobileBannerStatus({ isShow: false });
-  });
+    saveMobileBannerStatus({ isShow: false, date: new Date() });
+  };
+
+  closeButton.addEventListener("click", closeBannerAndSaveStatus);
 })();
