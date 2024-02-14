@@ -1,26 +1,23 @@
 //- Section
-hgroup.text-center
-  p.mb-0.text-body-tertiary Код ЄДРПОУ
-  h1.fs-2= data.edrpou
-h2.fs-1.fw-bolder.text-center= data.companyName
-dl.text-center
-  dt.text-body-tertiary.fw-normal.mb-0 Директор
-  dd= data.director
+if !data.error
+  hgroup.text-center
+    p.mb-0.text-body-tertiary Код ЄДРПОУ
+    h1.fs-2= data.edrpou
+  h2.fs-1.fw-bolder.text-center= data.companyName
+  dl.text-center
+    dt.text-body-tertiary.fw-normal.mb-0 Директор
+    dd= data.director
 
-.text-center
-  menu.d-flex.flex-column.flex-sm-row.justify-content-center.d-print-none
-    li
-      button.btn.btn-lg.btn-primary.m-2(type="button")
-        i.far.fa-file-pdf.me-2
-        | Витяг з ЄДР
+  .text-center
+    menu.d-flex.flex-column.flex-sm-row.justify-content-center.d-print-none
+      li
+        button.btn.btn-lg.btn-primary.m-2(type="button")
+          i.far.fa-file-pdf.me-2
+          | Витяг з ЄДР
 
-    li
-      button.btn.btn-lg.m-2(type="button")
-        i.far.fa-fw.fa-circle-notch.me-2.fa-spin
-        | Статут
+      li
+        button.btn.btn-lg.m-2(type="button")
+          i.far.fa-fw.fa-circle-notch.me-2.fa-spin
+          | Статут
 
-  include ../public/img/payment-systems.svg
-  //- img.odb-payment-system.m-2.fs-1.d-print-none(
-    src="/img/payment-systems.svg",
-    alt="Платіжні системи"
-    )
+    include ../public/img/payment-systems.svg

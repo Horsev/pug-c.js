@@ -11,10 +11,21 @@ const createCompanyPage = async (request, result) => {
 
   const endpoint = endpointCompany(code);
 
-  const response = await fetch(endpoint);
-  const { data } = await response.json();
+  let templateData = {};
 
-  result.render("c.pug", fullCompany(data));
+  try {
+    const response = await fetch(endpoint);
+    const { data } = await response.json();
+    templateData = fullCompany(data);
+  } catch {
+    templateData = {
+      error: true,
+      message: "Backend unrechable",
+    };
+  } finally {
+    const template = templateData.error ? "error.pug" : "c.pug";
+    result.render(template, templateData);
+  }
 };
 
 export default createCompanyPage;

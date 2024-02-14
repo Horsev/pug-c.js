@@ -17,24 +17,9 @@ html(lang="uk")
     meta(name='msapplication-TileColor' content='#2d89ef')
     meta(name='theme-color' content='#f8f9fa')
 
-    script(
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js",
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL",
-      crossorigin="anonymous"
-    )
-
-    script(
-      src="https://kit.fontawesome.com/5df4f01409.js",
-      crossorigin="anonymous"
-    )
-
     script
       include ../js/theme.js
 
   body.bg-body-tertiary
-    block content
-    script
-      include ../js/suggests.js
-      include ../js/search.js
-      include ../js/misc.js
-
+    .container.p-5
+      h1 Сервіс тимчасово недоступний
