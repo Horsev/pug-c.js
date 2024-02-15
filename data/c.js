@@ -237,7 +237,7 @@ const fullCompany = ({ registry }) => {
 
   return {
     data,
-    cell: getCompanyRegistry(data, registryConfig),
+    registryCell: getCompanyRegistry(data, registryConfig),
     config,
     faq: faqMapper(mapperFullCompany(registry)),
   };
