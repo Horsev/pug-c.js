@@ -1,18 +1,12 @@
 (() => {
-  const saveItem = (key) => (value) =>
-    localStorage.setItem(key, JSON.stringify(value));
-
-  const readItem = (key) => (defaultValue) => {
-    try {
-      return JSON.parse(localStorage.getItem(key)) || defaultValue;
-    } catch (e) {
-      return defaultValue;
-    }
-  };
+  // eslint-disable-next-line no-underscore-dangle
+  const { saveItem, readItem } = window.__ODB__;
 
   const isMobileBanner = readItem("isMobileBanner")({
     isShow: true,
   });
+
+  const saveMobileBannerStatus = saveItem("isMobileBanner");
 
   const { isShow } = isMobileBanner;
   const banner = document.querySelector("#odb-open-in-app");
@@ -21,8 +15,6 @@
   if (!isShow) {
     banner.classList.add("d-none");
   }
-
-  const saveMobileBannerStatus = saveItem("isMobileBanner");
 
   const { Collapse } = window.bootstrap;
   const collapsed = new Collapse("#odb-open-in-app", {

@@ -1,4 +1,7 @@
 (() => {
+  // eslint-disable-next-line no-underscore-dangle
+  const { saveItem, readItem } = window.__ODB__;
+
   const MAX_SUGGESTIONS = 100;
 
   const params = new URLSearchParams(document.location.search);
@@ -6,15 +9,10 @@
 
   const searchInput = document.querySelector("input[name=odb-search]");
 
-  const saveItem = (key) => (value) =>
-    localStorage.setItem(key, JSON.stringify(value));
-
-  const readItem = (key) => () => JSON.parse(localStorage.getItem(key) || "[]");
-
   const saveSuggestions = saveItem("suggestions");
   const readSuggestions = readItem("suggestions");
 
-  const suggestions = readSuggestions();
+  const suggestions = readSuggestions([]);
 
   const datalist = document.querySelector("datalist#suggestions");
 
