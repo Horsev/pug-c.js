@@ -12,7 +12,6 @@
   "author": "Andrey Horsev",
   "license": "ISC",
   "dependencies": {
-    "@908inc/odb-typography": "^1.0.20",
     "bootstrap": "^5.3.2",
     "compression": "^1.7.4",
     "express": "^4.0.0",
