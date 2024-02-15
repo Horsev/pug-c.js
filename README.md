@@ -2,7 +2,7 @@
 
 1. Open terminal and run `npm install`
 2. Sass whatcher `sass --watch ./scss/theme.sass ./public/css/theme.css`
-3. config.env
+3. Create config file `config.env` and fill it with your data
 
 ```ini
 API_DOMAIN=https://opendatabot.com
