@@ -10,6 +10,7 @@ const createHelpPage = async (request, result) => {
     filters: {
       "uglify-js": (script) => uglifyJS.minify(script).code,
       "markdown-it": (md) => markdownit().render(md),
+      "no-newline": (html) => html.replace(/\n/g, " "),
     },
   };
 
