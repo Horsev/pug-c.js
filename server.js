@@ -2,6 +2,7 @@ import express, { static as staticFolder } from "express";
 import compression from "compression";
 // eslint-disable-next-line import/extensions
 import createCompanyPage from "./api/c.js";
+import createHelpPage from "./api/help.js";
 
 const { PORT } = process.env;
 const { log } = console;
@@ -17,5 +18,6 @@ app.set("view engine", "pug");
 app.use(staticFolder("public"));
 
 app.get("/c/:code", createCompanyPage);
+app.get("/help", createHelpPage);
 
 app.listen(PORT, log(startingMessage));

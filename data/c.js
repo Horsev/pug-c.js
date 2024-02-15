@@ -1,4 +1,3 @@
-import uglifyJS from "uglify-js";
 // eslint-disable-next-line import/extensions
 import toHryvnas from "../helpers/numbers.js";
 
@@ -62,9 +61,6 @@ const fullCompany = ({ registry }) => ({
   data: mapperFullCompany(registry),
   config,
   faq: faqMapper(mapperFullCompany(registry)),
-  filters: {
-    js: (code) => uglifyJS.minify(code).code,
-  },
 });
 
 export default fullCompany;

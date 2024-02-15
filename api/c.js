@@ -1,3 +1,4 @@
+import uglifyJS from "uglify-js";
 // eslint-disable-next-line import/extensions
 import fullCompany from "../data/c.js";
 
@@ -16,7 +17,12 @@ const createCompanyPage = async (request, result) => {
   try {
     const response = await fetch(endpoint);
     const { data } = await response.json();
-    templateData = fullCompany(data);
+    templateData = {
+      ...fullCompany(data),
+      filters: {
+        "uglify-js": (script) => uglifyJS.minify(script).code,
+      },
+    };
   } catch {
     templateData = {
       error: true,
