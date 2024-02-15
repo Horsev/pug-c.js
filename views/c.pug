@@ -5,7 +5,12 @@ mixin section
     block
 mixin container
   .bg-body.rounded.p-3.mb-2
-    block    
+    block  
+mixin block-section(title)
+  hgroup
+    h3= title
+
+include ../components/cell.pug
 
 block content
   include ../components/mobile-banner.pug
@@ -14,6 +19,10 @@ block content
   .container.mb-3
     +section
       include ../components/jambatron.pug
+    +section
+      +block-section("Реєстраційні дані")
+      dl.row.g-2(itemscope, itemtype="https://schema.org/Organization")
+        +cell(registryCell)
     +container
       include ../components/promotion.pug
 
