@@ -23,11 +23,11 @@ each item in cell
     else if Array.isArray(item.subtitle)
       each subtitle in item.subtitle
         dd(itemprop=item.itemprop) 
-        if subtitle.link
-          a(href=subtitle.link) #{subtitle.value}
-        else if subtitle.value
-          | #{subtitle.value}
-        else 
-          #{subtitle}
+          if subtitle.link
+            a(href=subtitle.link) #{subtitle.value}
+          else if subtitle.value
+            | #{subtitle.value}
+          else 
+            #{subtitle}
     else
       dd(itemprop=item.itemprop) #{item.subtitle}
