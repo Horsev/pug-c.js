@@ -2,8 +2,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-extraneous-dependencies */
 
-import typography from "@908inc/odb-typography";
-
 import { processAddress } from "./address.js";
 
 import { getNumericDate } from "./date.js";
@@ -187,9 +185,6 @@ export const formatActivities = (activities) => {
     : secondaryActivities;
 };
 
-const { formatPhoneNumber, parsePhoneNumber, removeNonDigits, compose } =
-  typography;
-
 export const formatPrimaryActivity = (primaryActivity) => {
   if (!primaryActivity) return {};
 
@@ -206,6 +201,31 @@ export const formatPrimaryActivity = (primaryActivity) => {
 
 export const getPhoneNumber = (phone) => {
   if (!phone) return null;
+
+  const removeNonDigits = (str) => {
+    const reNonDigits = /\D+/g;
+    return str.replace(reNonDigits, "");
+  };
+
+  const parsePhoneNumber = (str) => {
+    const rePrefixPattern = "^(?<prefix>380|0)";
+    const reCodePattern = "(?<code>\\d{2})";
+    const reNumberPattern = "(?<number>\\d{7})$";
+    const re = new RegExp(
+      `${rePrefixPattern}${reCodePattern}${reNumberPattern}`,
+    );
+    return re.exec(str) && re.exec(str).groups;
+  };
+
+  const formatPhoneNumber = ({ code, number }) => {
+    const rePhoneNumber = /^(\d{3})(\d{2})(\d{2})$/;
+    return `+380 (${code}) ${number.replace(rePhoneNumber, "$1-$2-$3")}`;
+  };
+
+  const compose =
+    (...fns) =>
+    (...args) =>
+      fns.reduceRight((res, fn) => [fn.call(null, ...res)], args)[0];
 
   const formatPhone = compose(
     formatPhoneNumber,
@@ -256,6 +276,8 @@ export const getCurrency = (value) => {
     : `${parsedValue.toLocaleString("UK-ua")}\xA0грн`;
 };
 
+const normalizeQuotes = (text) => text.replace(/[«»“”]/gi, '"');
+
 const getSubtitleRegistry = (cell) => {
   if (!cell.subtitle) return null;
 
@@ -266,7 +288,7 @@ const getSubtitleRegistry = (cell) => {
   switch (cell.key) {
     case "fullName":
       subtitle = formatAdaptiveName(
-        titleToLowerCase(typography.normalizeQuotes(cell.subtitle)),
+        titleToLowerCase(normalizeQuotes(cell.subtitle)),
       );
       break;
     case "address":
