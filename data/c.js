@@ -1,4 +1,4 @@
-import { toHryvnas } from "../helpers/numbers.js";
+import { formatLocalCurrency } from "../helpers/numbers.js";
 
 import {
   formatAdaptiveName,
@@ -61,7 +61,7 @@ const mapperFullCompany = (registry) => ({
   companyName: registry.shortName || registry.fullName,
   edrpou: registry.code,
   director: registry.ceoName,
-  capital: toHryvnas(registry.capital),
+  capital: formatLocalCurrency(registry.capital),
 });
 
 const faqMapper = ({ companyName, edrpou, capital }) => [
