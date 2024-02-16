@@ -8,6 +8,6 @@
 LOCALE=uk-UA
 API_DOMAIN=https://opendatabot.com
 API_PATH=/api/v3/full-company-open-data
-APIKEY=ptPJUS85PPDk
 PORT=8080
+APIKEY=your_api_key
 ```
