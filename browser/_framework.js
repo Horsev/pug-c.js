@@ -1,8 +1,8 @@
-window.ODB = {};
+window.__ODB__ = {};
 
 (() => {
   const { assign } = Object;
-  const { ODB } = window;
+  const { __ODB__ } = window;
 
   const config = {
     version: "0.0.1",
@@ -17,5 +17,5 @@ window.ODB = {};
     },
   };
 
-  assign(ODB, config);
+  assign(__ODB__, config);
 })();

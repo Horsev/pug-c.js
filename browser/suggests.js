@@ -1,6 +1,5 @@
 (() => {
-  // eslint-disable-next-line no-underscore-dangle
-  const { saveItem, readItem } = window.ODB;
+  const { saveItem, readItem } = window.__ODB__;
 
   const MAX_SUGGESTIONS = 100;
 
