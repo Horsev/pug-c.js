@@ -6,6 +6,7 @@
 
 ```ini
 LOCALE=uk-UA
+CURRENCY=UAH
 API_DOMAIN=https://opendatabot.com
 API_PATH=/api/v3/full-company-open-data
 PORT=8080
