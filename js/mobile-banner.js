@@ -1,6 +1,6 @@
 (() => {
   // eslint-disable-next-line no-underscore-dangle
-  const { saveItem, readItem } = window.__ODB__;
+  const { saveItem, readItem } = window.ODB;
 
   const isMobileBanner = readItem("isMobileBanner")({
     isShow: true,
