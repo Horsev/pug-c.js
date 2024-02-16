@@ -1,75 +1,49 @@
+export { formatLastTime, getNumericDate, getDateNow };
+
 const { LOCALE } = process.env;
 
-export const getNumericDate = (value) => {
-  const date = new Date(value);
-  return Number.isNaN(date)
-    ? value
-    : new Intl.DateTimeFormat(LOCALE).format(date);
+const datetimeOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
 };
 
-export const getDateNow = () => +new Date();
-
-export const formatDateTime = (date) => {
-  const PAD_LENGTH = 2;
-  const MILLISECONDS_PAD_LENGTH = 3;
-
-  const dateTime = new Date(date);
-
-  // Получаем компоненты даты
-  const year = dateTime.getUTCFullYear();
-  const month = (dateTime.getUTCMonth() + 1)
-    .toString()
-    .padStart(PAD_LENGTH, "0"); // Месяцы начинаются с 0
-  const day = dateTime.getUTCDate().toString().padStart(PAD_LENGTH, "0");
-
-  // Получаем компоненты времени
-  const hours = dateTime.getUTCHours().toString().padStart(PAD_LENGTH, "0");
-  const minutes = dateTime.getUTCMinutes().toString().padStart(PAD_LENGTH, "0");
-  const seconds = dateTime.getUTCSeconds().toString().padStart(PAD_LENGTH, "0");
-  const milliseconds = dateTime
-    .getUTCMilliseconds()
-    .toString()
-    .padStart(MILLISECONDS_PAD_LENGTH, "0");
-
-  // Форматируем дату и время
-  const formattedDate = `${year}-${month}-${day}`;
-  const formattedTime = `${hours}:${minutes}:${seconds}.${milliseconds}`;
-
-  return `${formattedDate} ${formattedTime}`;
+const dateOptions = {
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
 };
 
-export const adjustAndFormatDateTime = (datetime) => {
-  const HOUR_ADJUSTMENT = 2;
-  const MINUTE_FLOOR_DIVISOR = 5;
+const getDateNow = () => +new Date();
 
-  const updateDatetime = new Date(datetime);
-  updateDatetime.setHours(updateDatetime.getHours() + HOUR_ADJUSTMENT);
-  const minutes = updateDatetime.getMinutes();
-  const floor = (power) => (mins) => Math.floor(mins / power) * power;
-  const floor5 = floor(MINUTE_FLOOR_DIVISOR);
+const roundDatetimeDown = (datetime, minutes) => {
+  const minutesNow = datetime.getMinutes();
+  const roundedMinutes = Math.floor(minutesNow / minutes) * minutes;
+  datetime.setMinutes(roundedMinutes);
+  datetime.setSeconds(0);
+  datetime.setMilliseconds(0);
 
-  return new Date(updateDatetime.setMinutes(floor5(minutes)));
+  return datetime;
 };
 
-export const humanizedUpdateDatetime = (datetime) => {
-  const updateDatetime = new Date(datetime);
-  const adjustedDatetime = adjustAndFormatDateTime(updateDatetime);
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    timeZone: "UTC",
-  };
-  return new Date(adjustedDatetime).toLocaleTimeString(LOCALE, options);
-};
+const humanizeDate = (locale, options) => (datetime) =>
+  datetime.toLocaleDateString(locale, options);
 
-export const formatLastTime = (date) => {
-  const dateTime = formatDateTime(adjustAndFormatDateTime(date));
-  const dateTimeValue = humanizedUpdateDatetime(date);
+const MINUTES_TO_ROUND = 5;
+
+const formatLastTime = (date) => {
+  const dateTime = roundDatetimeDown(new Date(date), MINUTES_TO_ROUND);
+  const dateTimeValue = humanizeDate(LOCALE, datetimeOptions)(dateTime);
+
   return {
     dateTime,
     dateTimeValue,
   };
+};
+
+const getNumericDate = (value) => {
+  const date = new Date(value);
+  return humanizeDate(LOCALE, dateOptions)(date);
 };
