@@ -1,8 +1,8 @@
-export { processAddress, regexKOATTY, addressCreator };
-
 import { citiesConfig } from "../constants/index.js";
 
 import { capitalizeWord } from "./strings.js";
+
+export { processAddress, regexKOATTY, addressCreator };
 
 const atuCodeCreator = (cityName) => {
   return citiesConfig[cityName] || null;

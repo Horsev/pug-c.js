@@ -1,3 +1,17 @@
+import { processAddress } from "./address.js";
+import { getNumericDate } from "./date.js";
+
+import { shortForms } from "../constants/index.js";
+
+import {
+  normalizeQuotes,
+  capitalizeWord,
+  padCodeWithLeadingZeros,
+  validateCompanyCode,
+} from "./strings.js";
+
+import { convertToHumanCurrency } from "./numbers.js";
+
 export {
   getShortForm,
   formatAdaptiveName,
@@ -12,20 +26,6 @@ export {
   getCompanyRegistry,
   fixCityName,
 };
-
-import { processAddress } from "./address.js";
-import { getNumericDate } from "./date.js";
-
-import { shortForms } from "../constants/index.js";
-
-import {
-  normalizeQuotes,
-  capitalizeWord,
-  padCodeWithLeadingZeros,
-  validateCompanyCode,
-} from "./strings.js";
-
-import { convertToHumanCurrency } from "./numbers.js";
 
 const getShortForm = (name) => {
   if (!name) return "";
@@ -42,6 +42,7 @@ const fixCityName = (name) => name.replace(/(м\.)(?!\s)/g, "$1 ");
 const LONG_NAME_THRESHOLD = 15;
 const SOFT_HYPHEN = 0x00ad;
 const VOWELS_REGEX = /[ОАИЕІУЯ]/;
+const WORD_HALF = 2;
 
 const splitLongNames = (text) => {
   const addHyphenAfterMiddleVowel = (word) => {
@@ -53,7 +54,7 @@ const splitLongNames = (text) => {
     };
 
     const splitWordAtMiddle = (_word) => {
-      const position = Math.ceil(_word.length / 2);
+      const position = Math.ceil(_word.length / WORD_HALF);
       return [_word.slice(0, position), _word.slice(position)];
     };
 

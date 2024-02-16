@@ -1,3 +1,5 @@
+export { shortForms, citiesConfig };
+
 const shortForms = {
   "товариство з обмеженою відповідальністю": "ТОВ",
   "фермерське господарство": "ФГ",
@@ -98,5 +100,3 @@ const citiesConfig = {
   "місто Маріуполь": "UA14140050010029262",
   "село Каташин": "UA05040270100070244",
 };
-
-export { shortForms, citiesConfig };
