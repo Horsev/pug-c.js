@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-underscore-dangle
 window.__ODB__ = {};
 
 (() => {

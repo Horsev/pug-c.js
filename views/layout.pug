@@ -29,13 +29,13 @@ html(lang="uk")
     )
 
     script
-      include:uglify-js ../js/_framework.js
-      include:uglify-js ../js/theme.js
+      include:uglify-js ../browser/_framework.js
+      include:uglify-js ../browser/theme.js
 
 
   body.bg-body-tertiary
     block content
     script
-      include:uglify-js ../js/suggests.js
-      include:uglify-js ../js/search.js
+      include:uglify-js ../browser/suggests.js
+      include:uglify-js ../browser/search.js
 

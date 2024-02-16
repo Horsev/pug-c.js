@@ -1,5 +1,4 @@
 (() => {
-  // eslint-disable-next-line no-underscore-dangle
   const { saveItem, readItem } = window.__ODB__;
 
   const MAX_SUGGESTIONS = 100;
@@ -16,26 +15,18 @@
 
   const datalist = document.querySelector("datalist#suggestions");
 
-  let code = "";
-  let description = "";
   let newSuggestions = suggestions;
 
-  if (query) {
-    try {
-      code = searchInput.getAttribute("data-odb-code");
-      description = searchInput.getAttribute("data-odb-description");
-    } catch {
-      // Do nothig
-    } finally {
-      if (query === code) {
-        newSuggestions = suggestions.filter(
-          (suggestion) => suggestion.code !== code,
-        );
-        newSuggestions.unshift({ code, description });
-        newSuggestions = newSuggestions.slice(0, MAX_SUGGESTIONS);
-        saveSuggestions(newSuggestions);
-      }
-    }
+  const code = searchInput.getAttribute("data-odb-code");
+  const description = searchInput.getAttribute("data-odb-description");
+
+  if (query === code) {
+    newSuggestions = suggestions.filter(
+      (suggestion) => suggestion.code !== code,
+    );
+    newSuggestions.unshift({ code, description });
+    newSuggestions = newSuggestions.slice(0, MAX_SUGGESTIONS);
+    saveSuggestions(newSuggestions);
   }
 
   const renderOptions = (suggestion) => {

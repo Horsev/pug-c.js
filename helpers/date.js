@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 const UK_LOCALE = "uk-UA";
 
 export const getNumericDate = (value) => {
@@ -11,21 +10,26 @@ export const getNumericDate = (value) => {
 export const getDateNow = () => +new Date();
 
 export const formatDateTime = (date) => {
+  const PAD_LENGTH = 2;
+  const MILLISECONDS_PAD_LENGTH = 3;
+
   const dateTime = new Date(date);
 
   // Получаем компоненты даты
   const year = dateTime.getUTCFullYear();
-  const month = (dateTime.getUTCMonth() + 1).toString().padStart(2, "0"); // Месяцы начинаются с 0
-  const day = dateTime.getUTCDate().toString().padStart(2, "0");
+  const month = (dateTime.getUTCMonth() + 1)
+    .toString()
+    .padStart(PAD_LENGTH, "0"); // Месяцы начинаются с 0
+  const day = dateTime.getUTCDate().toString().padStart(PAD_LENGTH, "0");
 
   // Получаем компоненты времени
-  const hours = dateTime.getUTCHours().toString().padStart(2, "0");
-  const minutes = dateTime.getUTCMinutes().toString().padStart(2, "0");
-  const seconds = dateTime.getUTCSeconds().toString().padStart(2, "0");
+  const hours = dateTime.getUTCHours().toString().padStart(PAD_LENGTH, "0");
+  const minutes = dateTime.getUTCMinutes().toString().padStart(PAD_LENGTH, "0");
+  const seconds = dateTime.getUTCSeconds().toString().padStart(PAD_LENGTH, "0");
   const milliseconds = dateTime
     .getUTCMilliseconds()
     .toString()
-    .padStart(3, "0");
+    .padStart(MILLISECONDS_PAD_LENGTH, "0");
 
   // Форматируем дату и время
   const formattedDate = `${year}-${month}-${day}`;
@@ -35,11 +39,14 @@ export const formatDateTime = (date) => {
 };
 
 export const adjustAndFormatDateTime = (datetime) => {
+  const HOUR_ADJUSTMENT = 2;
+  const MINUTE_FLOOR_DIVISOR = 5;
+
   const updateDatetime = new Date(datetime);
-  updateDatetime.setHours(updateDatetime.getHours() + 2);
+  updateDatetime.setHours(updateDatetime.getHours() + HOUR_ADJUSTMENT);
   const minutes = updateDatetime.getMinutes();
   const floor = (power) => (mins) => Math.floor(mins / power) * power;
-  const floor5 = floor(5);
+  const floor5 = floor(MINUTE_FLOOR_DIVISOR);
 
   return new Date(updateDatetime.setMinutes(floor5(minutes)));
 };

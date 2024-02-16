@@ -5,8 +5,10 @@
 3. Create config file `config.env` and fill it with your data
 
 ```ini
+LOCALE=uk-UA
+CURRENCY=UAH
 API_DOMAIN=https://opendatabot.com
 API_PATH=/api/v3/full-company-open-data
-APIKEY= # your api key
 PORT=8080
+APIKEY=your_api_key
 ```

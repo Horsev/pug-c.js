@@ -1,31 +1,14 @@
 extends layout.pug
 
-mixin section
-  section.bg-body.rounded.p-3.mb-2
-    block
-mixin container
-  .bg-body.rounded.p-3.mb-2
-    block  
-mixin block-section(title)
-  hgroup
-    h3= title
-
-include ../components/cell.pug
-
 block content
   include ../components/mobile-banner.pug
   .container
     include ../components/header.pug
-  .container.mb-3
-    +section
-      include ../components/jambatron.pug
-    +section
-      +block-section("Реєстраційні дані")
-      dl.row.g-2(itemscope, itemtype="https://schema.org/Organization")
-        +cell(registryCell)
-    +container
-      include ../components/promotion.pug
+    
+    include ../components/jambatron.pug
+    include ../components/registry-data.pug
 
-  .container.mb-3
+    include ../components/promotion.pug
+
     include ../components/faq.pug
     include ../components/footer.pug

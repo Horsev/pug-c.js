@@ -2,10 +2,12 @@
   const searchForms = document.querySelectorAll("form.odb-search-by-code");
 
   const onSubmit = (event) => {
-    const formData = new FormData(event.target);
+    const { target } = event;
+    const formData = new FormData(target);
     const query = formData.get("odb-search");
 
-    const reCompanyCode = /^\d{8}$/;
+    const COMPANY_CODE_LENGTH = 8;
+    const reCompanyCode = new RegExp(`^\\d{${COMPANY_CODE_LENGTH}}$`);
 
     if (!query || !reCompanyCode.test(query)) {
       if (query) {
@@ -40,8 +42,7 @@
       return;
     }
 
-    // eslint-disable-next-line no-param-reassign
-    event.target.action = `/c/${query}`;
+    target.setAttribute("action", `/c/${query}`);
   };
 
   searchForms.forEach((form) => form.addEventListener("submit", onSubmit));

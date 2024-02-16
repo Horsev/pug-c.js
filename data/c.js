@@ -1,11 +1,8 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable import/extensions */
-import toHryvnas from "../helpers/numbers.js";
+import { toHryvnas } from "../helpers/numbers.js";
 
 import {
   formatAdaptiveName,
   getShortForm,
-  getFirstWord,
   formatKvedClass,
   transformCompany,
   formatPagesSlider,
@@ -18,8 +15,9 @@ import {
 } from "../helpers/text.js";
 
 import { addressCreator, regexKOATTY } from "../helpers/address.js";
-
 import { formatLastTime, getDateNow } from "../helpers/date.js";
+
+import { getFirstWord, padCodeWithLeadingZeros } from "../helpers/strings.js";
 
 const botContent = "source_c-info_42011402";
 
@@ -84,7 +82,7 @@ const companyRegistryConfig = [
   },
   { fullName: ({ fullName = "" }) => fullName },
   { ceoName: ({ ceoName = "" }) => ceoName },
-  { code: ({ code }) => code.padStart(8, "0") },
+  { code: ({ code }) => padCodeWithLeadingZeros(code) },
   {
     searchKved: ({ primaryActivity }) => getFirstWord(primaryActivity),
   },

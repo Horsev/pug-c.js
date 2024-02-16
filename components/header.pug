@@ -19,7 +19,7 @@ header
               aria-label="Пошук",
               size="32",
               value=""
-              data-odb-code=data.edrpou
+              data-odb-code=data.code
               data-odb-description=data.companyName
             )
             datalist#suggestions
@@ -31,10 +31,11 @@ header
               | Як пошук працює? 
 
         .p-1
-        a.btn.btn-link.ms-auto.d-print-none.text-nowrap(
+        
+        a.btn.btn-link.d-print-none.text-nowrap.ms-auto(
           href="/logout",
           aria-label="logout",
           rel="nofollow"
         )
-          i.far.fa-arrow-right-from-bracket.me-2
-          span.d-none.d-md-inline Вийти
+          i.far.fa-arrow-right-from-bracket
+          span.d-none.d-md-inline.ms-2 Вийти
