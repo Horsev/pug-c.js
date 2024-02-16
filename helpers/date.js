@@ -1,10 +1,10 @@
-const UK_LOCALE = "uk-UA";
+const { LOCALE } = process.env;
 
 export const getNumericDate = (value) => {
   const date = new Date(value);
   return Number.isNaN(date)
     ? value
-    : new Intl.DateTimeFormat(UK_LOCALE).format(date);
+    : new Intl.DateTimeFormat(LOCALE).format(date);
 };
 
 export const getDateNow = () => +new Date();
@@ -62,7 +62,7 @@ export const humanizedUpdateDatetime = (datetime) => {
     minute: "numeric",
     timeZone: "UTC",
   };
-  return new Date(adjustedDatetime).toLocaleTimeString("uk-UA", options);
+  return new Date(adjustedDatetime).toLocaleTimeString(LOCALE, options);
 };
 
 export const formatLastTime = (date) => {
