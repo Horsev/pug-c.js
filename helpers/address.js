@@ -1,3 +1,5 @@
+export { processAddress, regexKOATTY, addressCreator };
+
 const atuCodeCreator = (cityName) => {
   const cityConfig = {
     "місто Дніпро": "UA12020010010037010",
@@ -104,7 +106,7 @@ const toTitleCase = (string) => {
   return replaceWords(ukWordRegex, capitalizeFirstLetter)(string);
 };
 
-export const processAddress = (location) => {
+const processAddress = (location) => {
   const uaAlphabet = "а-щєґіїюяь'";
 
   const ual = `[${uaAlphabet}\\-\\.\\s()\\d]+`;
@@ -258,7 +260,7 @@ export const processAddress = (location) => {
   return typograph(parsedAddresses) || location;
 };
 
-export const regexKOATTY = (location) => {
+const regexKOATTY = (location) => {
   const { zip, country, parts, address } = location;
 
   const isEmptyCollection = (input) =>
@@ -412,7 +414,7 @@ const combineParts = (...parts) =>
 const formatLinkParts = (...args) =>
   combineParts(...args.map(appendIfTruthy()));
 
-export const addressCreator = (obj) => {
+const addressCreator = (obj) => {
   if (typeof obj === "string") return obj;
 
   const {

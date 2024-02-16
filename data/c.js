@@ -1,4 +1,4 @@
-import toHryvnas from "../helpers/numbers.js";
+import { toHryvnas } from "../helpers/numbers.js";
 
 import {
   formatAdaptiveName,

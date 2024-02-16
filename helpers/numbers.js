@@ -1,3 +1,5 @@
+export { toHryvnas };
+
 const convertToCurrency = (locale, currency) => (number) =>
   new Intl.NumberFormat(locale, {
     style: "currency",
@@ -5,5 +7,3 @@ const convertToCurrency = (locale, currency) => (number) =>
   }).format(number);
 
 const toHryvnas = convertToCurrency("uk-UA", "UAH");
-
-export default toHryvnas;
