@@ -1,4 +1,11 @@
-export { formatLastTime, getNumericDate, getDateNow };
+export {
+  formatLastTime,
+  getNumericDate,
+  getDateNow,
+  humanizeDatetime,
+  humanizeDate,
+  roundDatetimeDown,
+};
 
 const { LOCALE } = process.env;
 
@@ -16,34 +23,38 @@ const dateOptions = {
   day: "numeric",
 };
 
-const getDateNow = () => +new Date();
+const roundDatetimeDown = (datetime, intervalInMinutes) => {
+  const newDatetime = new Date(datetime.getTime());
+  const minutes = newDatetime.getMinutes();
+  const roundedMinutes =
+    Math.floor(minutes / intervalInMinutes) * intervalInMinutes;
+  newDatetime.setMinutes(roundedMinutes);
+  newDatetime.setSeconds(0);
+  newDatetime.setMilliseconds(0);
 
-const roundDatetimeDown = (datetime, minutes) => {
-  const minutesNow = datetime.getMinutes();
-  const roundedMinutes = Math.floor(minutesNow / minutes) * minutes;
-  datetime.setMinutes(roundedMinutes);
-  datetime.setSeconds(0);
-  datetime.setMilliseconds(0);
-
-  return datetime;
+  return newDatetime;
 };
 
-const humanizeDate = (locale, options) => (datetime) =>
+const humanizeDatetime = (locale, options) => (datetime) =>
   datetime.toLocaleDateString(locale, options);
 
-const MINUTES_TO_ROUND = 5;
+const humanizeDate = (locale, options) => (datetime) =>
+  datetime.toLocaleTimeString(locale, options);
+
+const getDateNow = () => +new Date();
+
+const updateIntervalInMin = 5;
 
 const formatLastTime = (date) => {
-  const dateTime = roundDatetimeDown(new Date(date), MINUTES_TO_ROUND);
-  const dateTimeValue = humanizeDate(LOCALE, datetimeOptions)(dateTime);
+  const lastUpdate = roundDatetimeDown(new Date(date), updateIntervalInMin);
+  const lastUpdateValue = humanizeDatetime(LOCALE, datetimeOptions)(lastUpdate);
 
   return {
-    dateTime,
-    dateTimeValue,
+    dateTime: lastUpdate,
+    dateTimeValue: lastUpdateValue,
   };
 };
 
-const getNumericDate = (value) => {
-  const date = new Date(value);
-  return humanizeDate(LOCALE, dateOptions)(date);
-};
+const formatToLocaleDate = humanizeDate(LOCALE, dateOptions);
+
+const getNumericDate = (date) => formatToLocaleDate(new Date(date));
