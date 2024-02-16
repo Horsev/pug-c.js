@@ -1,9 +1,4 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-extraneous-dependencies */
-
 import { processAddress } from "./address.js";
-
 import { getNumericDate } from "./date.js";
 
 const shortForm = {
@@ -39,7 +34,6 @@ const splitLongNames = (text) => {
       const wordPartOne = _word.slice(0, position).split("").reverse().join("");
       const wordPartTwo = _word.slice(position).split("").join("");
 
-      // eslint-disable-next-line prefer-regex-literals
       const reVowels = new RegExp(/[ОАИЕІУЯ]/);
 
       const vowelPositionOne = wordPartOne.search(reVowels);

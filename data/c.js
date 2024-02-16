@@ -1,5 +1,3 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable import/extensions */
 import toHryvnas from "../helpers/numbers.js";
 
 import {
@@ -18,7 +16,6 @@ import {
 } from "../helpers/text.js";
 
 import { addressCreator, regexKOATTY } from "../helpers/address.js";
-
 import { formatLastTime, getDateNow } from "../helpers/date.js";
 
 const botContent = "source_c-info_42011402";

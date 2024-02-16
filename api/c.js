@@ -1,5 +1,4 @@
 import uglifyJS from "uglify-js";
-// eslint-disable-next-line import/extensions
 import fullCompany from "../data/c.js";
 
 const { APIKEY, API_DOMAIN, API_PATH } = process.env;

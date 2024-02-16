@@ -1,9 +1,8 @@
-// eslint-disable-next-line no-underscore-dangle
-window.__ODB__ = {};
+window.ODB = {};
 
 (() => {
   const { assign } = Object;
-  const { __ODB__ } = window;
+  const { ODB } = window;
 
   const config = {
     version: "0.0.1",
@@ -18,5 +17,5 @@ window.__ODB__ = {};
     },
   };
 
-  assign(__ODB__, config);
+  assign(ODB, config);
 })();

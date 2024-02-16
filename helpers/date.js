@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 const UK_LOCALE = "uk-UA";
 
 export const getNumericDate = (value) => {

@@ -1,13 +1,14 @@
 env:
   browser: true
-  es2021: true
+  node: true
 extends:
   - airbnb-base
   - plugin:prettier/recommended
-parserOptions:
-  ecmaVersion: latest
-  sourceType: module
 rules:
+  "import/extensions":
+    - "never"
+    - "ignorePackages": true
+
   prettier/prettier: error
   "no-magic-numbers":
     - "error"
