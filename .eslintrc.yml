@@ -6,9 +6,7 @@ extends:
   - plugin:prettier/recommended
 rules:
   "import/extensions":
-    - "never"
-    - "ignorePackages": true
-
+    - "ignorePackages"
   prettier/prettier: error
   "no-magic-numbers":
     - "error"
