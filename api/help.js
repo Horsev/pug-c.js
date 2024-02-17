@@ -3,10 +3,7 @@ import markdownit from "markdown-it";
 
 const createHelpPage = async (request, result) => {
   const templateData = {
-    data: {
-      edrpou: "",
-      name: "",
-    },
+    data: {},
     filters: {
       "uglify-js": (script) => uglifyJS.minify(script).code,
       "markdown-it": (md) => markdownit().render(md),
