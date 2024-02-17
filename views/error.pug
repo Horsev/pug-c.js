@@ -18,10 +18,12 @@ html(lang="uk")
     meta(name='theme-color' content='#f8f9fa')
 
     script
-      include ../js/theme.js
+      include:uglify-js ../browser/theme.js
 
   body.bg-body-tertiary
     section.container.p-5
       h1= message
-      .fs-1 
+      .fs-1.mb-3 
         include ../public/img/fa-bone-break.svg
+
+      a.btn.btn-outline-secondary(href='/') Повернутися на головну
