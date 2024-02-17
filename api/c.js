@@ -1,4 +1,5 @@
 import uglifyJS from "uglify-js";
+import { faIcon, noNewline } from "../helpers/filters.js";
 import fullCompany from "../data/c.js";
 
 const { APIKEY, API_DOMAIN, API_PATH } = process.env;
@@ -15,7 +16,8 @@ const createCompanyPage = async (request, result) => {
 
   const filters = {
     "uglify-js": (script) => uglifyJS.minify(script).code,
-    "no-newline": (html) => html.replace(/\n/g, " "),
+    "no-newline": noNewline,
+    "fa-icon": faIcon,
   };
 
   try {
