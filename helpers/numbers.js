@@ -13,8 +13,8 @@ const currencyOptions = (currency) => ({
 const getCurrency = (locale, currency) =>
   new Intl.NumberFormat(locale, currencyOptions(currency));
 
-const localCurrency = getCurrency(LOCALE, CURRENCY);
+const { format: localCurrency } = getCurrency(LOCALE, CURRENCY);
 
-const formatLocalCurrency = (amount) => localCurrency.format(amount);
+const formatLocalCurrency = (amount) => localCurrency(amount);
 
 // Refactor: convertToHumanCurrency › formatLocalCurrency();
