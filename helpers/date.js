@@ -1,4 +1,4 @@
-export { formatLastTime, getNumericDate, getDateNow };
+export { formatUpdateTime, getNumericDate };
 
 const { LOCALE } = process.env;
 
@@ -16,8 +16,6 @@ const dateOptions = {
   day: "numeric",
 };
 
-const getDateNow = () => +new Date();
-
 const roundDatetimeDown = (datetime, minutes) => {
   const minutesNow = datetime.getMinutes();
   const roundedMinutes = Math.floor(minutesNow / minutes) * minutes;
@@ -33,7 +31,7 @@ const humanizeDate = (locale, options) => (datetime) =>
 
 const MINUTES_TO_ROUND = 5;
 
-const formatLastTime = (date) => {
+const formatUpdateTime = (date) => {
   const dateTime = roundDatetimeDown(new Date(date), MINUTES_TO_ROUND);
   const dateTimeValue = humanizeDate(LOCALE, datetimeOptions)(dateTime);
 

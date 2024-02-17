@@ -15,7 +15,7 @@ import {
 } from "../helpers/text.js";
 
 import { addressCreator, regexKOATTY } from "../helpers/address.js";
-import { formatLastTime, getDateNow } from "../helpers/date.js";
+import { formatUpdateTime } from "../helpers/date.js";
 
 import { getFirstWord, padCodeWithLeadingZeros } from "../helpers/strings.js";
 
@@ -110,7 +110,7 @@ const companyRegistryConfig = [
     capital: ({ capital }) => capital,
   },
   {
-    lastTime: () => formatLastTime(getDateNow()),
+    lastTime: () => formatUpdateTime(new Date()),
   },
   {
     webPageDomain: ({ webPageDomain }) =>
