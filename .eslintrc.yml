@@ -15,11 +15,14 @@ extends:
 rules:
   prettier/prettier: error
   "no-magic-numbers":
-    - "error"
-    - "ignore": [0, 1]
+    - error
+    - ignore: [0, 1]
+      ignoreDefaultValues: true
+
   import/extensions:
     - error
     - always
+
   "no-use-before-define":
     - "error"
     - functions: false
