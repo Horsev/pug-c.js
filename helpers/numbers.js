@@ -1,23 +1,20 @@
-export { formatLocalCurrency, convertToHumanCurrency };
+// eslint-disable-next-line import/prefer-default-export
+export { formatLocalCurrency };
 
 const { LOCALE, CURRENCY } = process.env;
 
+const currencyOptions = (currency) => ({
+  style: "currency",
+  currency,
+  maximumFractionDigits: 0,
+  minimumFractionDigits: 0,
+});
+
 const getCurrency = (locale, currency) =>
-  new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency,
-  });
+  new Intl.NumberFormat(locale, currencyOptions(currency));
 
 const localCurrency = getCurrency(LOCALE, CURRENCY);
 
 const formatLocalCurrency = (amount) => localCurrency.format(amount);
 
-// Refactor: replace to formatLocalCurrency();
-const convertToHumanCurrency = (value, lang = LOCALE) => {
-  const amount = new Intl.NumberFormat(lang, {
-    style: "decimal",
-    maximumFractionDigits: 0,
-  }).format(value);
-
-  return `${amount} грн`;
-};
+// Refactor: convertToHumanCurrency › formatLocalCurrency();
