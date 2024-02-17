@@ -22,4 +22,12 @@ app.get("/c/:code", createCompanyPage);
 app.get("/help", createHelpPage);
 app.get("/error", createErrorPage("Це помилка, яку ми не можемо вирішити."));
 
+const hangle404Error = (request, result) => {
+  const pageNotFound = 404;
+  result.status(pageNotFound);
+  createErrorPage("Це сторінка не знайдена.")(request, result);
+};
+
+app.use(hangle404Error);
+
 app.listen(PORT, log(startingMessage));
