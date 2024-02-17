@@ -1,6 +1,5 @@
 import express, { static as staticFolder } from "express";
 import compression from "compression";
-// eslint-disable-next-line import/extensions
 import createCompanyPage from "./api/c.js";
 import createHelpPage from "./api/help.js";
 import createErrorPage from "./api/error.js";
@@ -20,14 +19,16 @@ app.use(staticFolder("public"));
 
 app.get("/c/:code", createCompanyPage);
 app.get("/help", createHelpPage);
-app.get("/error", createErrorPage("Це помилка, яку ми не можемо вирішити."));
+app.get("/error", createErrorPage("Це помилка, яку ми не можемо вирішити"));
 
-const hangle404Error = (request, result) => {
+const error404page = createErrorPage("Сторінка не знайдена");
+
+const hangle404Error = (template) => (request, result) => {
   const pageNotFound = 404;
   result.status(pageNotFound);
-  createErrorPage("Це сторінка не знайдена.")(request, result);
+  template(request, result);
 };
 
-app.use(hangle404Error);
+app.use(hangle404Error(error404page));
 
 app.listen(PORT, log(startingMessage));
