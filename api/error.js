@@ -1,12 +1,13 @@
-import uglifyJS from "uglify-js";
+import { uglifyJS, noNewline, faIcon } from "../helpers/filters.js";
 
 const createErrorPage = (message) => async (request, result) => {
   const templateData = {
     error: true,
     message,
     filters: {
-      "uglify-js": (script) => uglifyJS.minify(script).code,
-      "no-newline": (html) => html.replace(/\n/g, " "),
+      "uglify-js": uglifyJS,
+      "no-newline": noNewline,
+      "fa-icon": faIcon,
     },
   };
 

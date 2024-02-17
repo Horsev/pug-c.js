@@ -1,13 +1,12 @@
-import uglifyJS from "uglify-js";
-import markdownit from "markdown-it";
+import { uglifyJS, noNewline, markdownIt } from "../helpers/filters.js";
 
 const createHelpPage = async (request, result) => {
   const templateData = {
     data: {},
     filters: {
-      "uglify-js": (script) => uglifyJS.minify(script).code,
-      "markdown-it": (md) => markdownit().render(md),
-      "no-newline": (html) => html.replace(/\n/g, " "),
+      "uglify-js": uglifyJS,
+      "no-newline": noNewline,
+      "markdown-it": markdownIt,
     },
   };
 
