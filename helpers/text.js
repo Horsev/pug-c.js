@@ -10,7 +10,7 @@ import {
   validateCompanyCode,
 } from "./strings.js";
 
-import { convertToHumanCurrency } from "./numbers.js";
+import { formatLocalCurrency } from "./numbers.js";
 
 export {
   getShortForm,
@@ -295,7 +295,7 @@ const getSubtitleRegistry = (cell) => {
     case "capital":
       subtitle = {
         dataValue: cell.subtitle,
-        currencyToString: convertToHumanCurrency(cell.subtitle),
+        currencyToString: formatLocalCurrency(cell.subtitle),
       };
       break;
     case "registrationDate":
