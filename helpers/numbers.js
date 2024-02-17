@@ -1,20 +1,43 @@
-export { toHryvnas, convertToHumanCurrency };
+// eslint-disable-next-line import/prefer-default-export
+export { formatLocalCurrency, formatLocalNumber };
 
 const { LOCALE, CURRENCY } = process.env;
 
-const convertToCurrency = (locale, currency) => (number) =>
-  new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency,
-  }).format(number);
+const currencyOptions = (currency) => ({
+  style: "currency",
+  currency,
+  maximumFractionDigits: 0,
+  minimumFractionDigits: 0,
+});
 
-const toHryvnas = convertToCurrency(LOCALE, CURRENCY);
+const getLocalCurrency = (locale, currency) =>
+  new Intl.NumberFormat(locale, currencyOptions(currency));
 
-const convertToHumanCurrency = (value, lang = LOCALE) => {
-  const amount = new Intl.NumberFormat(lang, {
-    style: "decimal",
-    maximumFractionDigits: 0,
-  }).format(value);
+const { format: localCurrency } = getLocalCurrency(LOCALE, CURRENCY);
 
-  return `${amount} грн`;
+const formatLocalCurrency = (amount) => localCurrency(amount);
+
+// Refactor: convertToHumanCurrency › formatLocalCurrency();
+
+const getLocalNumber = (locale) => (maximumSignificantDigits) =>
+  new Intl.NumberFormat(locale, { maximumSignificantDigits });
+
+const getNumberOfSignificantDigits = (
+  number,
+  percentOfSignificantDigits = 100,
+) => {
+  const percent100 = 100;
+  const { floor } = Math;
+  const { length } = number.toString();
+  return floor(length * (percentOfSignificantDigits / percent100));
 };
+
+const localNumber = getLocalNumber(LOCALE);
+
+const localNumberWithSignificantDigits = (number, percentOfSignificantDigits) =>
+  localNumber(getNumberOfSignificantDigits(number, percentOfSignificantDigits));
+
+const formatLocalNumber = (number, percentOfSignificantDigits = 100) =>
+  localNumberWithSignificantDigits(number, percentOfSignificantDigits).format(
+    number,
+  );
