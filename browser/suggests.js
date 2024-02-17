@@ -20,7 +20,7 @@
   const code = searchInput.getAttribute("data-odb-code");
   const description = searchInput.getAttribute("data-odb-description");
 
-  if (query === code) {
+  if (query === code && code) {
     newSuggestions = suggestions.filter(
       (suggestion) => suggestion.code !== code,
     );
