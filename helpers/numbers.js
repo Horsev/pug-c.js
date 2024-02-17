@@ -10,10 +10,10 @@ const currencyOptions = (currency) => ({
   minimumFractionDigits: 0,
 });
 
-const getCurrency = (locale, currency) =>
+const getLocalCurrency = (locale, currency) =>
   new Intl.NumberFormat(locale, currencyOptions(currency));
 
-const { format: localCurrency } = getCurrency(LOCALE, CURRENCY);
+const { format: localCurrency } = getLocalCurrency(LOCALE, CURRENCY);
 
 const formatLocalCurrency = (amount) => localCurrency(amount);
 
