@@ -1,3 +1,5 @@
+import r from "./regex.js";
+
 import { citiesConfig } from "../constants/index.js";
 
 import { capitalizeWord } from "./strings.js";
@@ -22,15 +24,6 @@ const processAddress = (location) => {
 
   const ual = `[${uaAlphabet}\\-\\.\\s()\\d]+`;
   const uald = `[${uaAlphabet}\\-\\.\\s()\\d/]+`;
-
-  const r = (re, flags = "u") =>
-    new RegExp(
-      re
-        .replace(/#[^\n]*/gm, "")
-        .replace(/\\#/gm, "#")
-        .replace(/\s/gm, ""),
-      flags,
-    );
 
   const separator = ",\\s";
 
@@ -185,15 +178,6 @@ const regexKOATTY = (location) => {
     Object.values(processAddress(_addr)).filter(Boolean).join(", ");
 
   if (isEmptyCollection(parts)) return processAndJoinAddress(address);
-
-  const r = (re, flags = "u") =>
-    new RegExp(
-      re
-        .replace(/#[^\n]*/gm, "")
-        .replace(/\\#/gm, "#")
-        .replace(/\s/gm, ""),
-      flags,
-    );
 
   const {
     atu,
