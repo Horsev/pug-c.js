@@ -12,10 +12,11 @@ import {
   formatWebPageDomain,
   formatLocation,
   getCompanyRegistry,
+  formatLastTime,
 } from "../helpers/text.js";
 
 import { addressCreator, regexKOATTY } from "../helpers/address.js";
-import { formatLastTime, getDateNow } from "../helpers/date.js";
+import { getDateNow } from "../helpers/date.js";
 
 import { getFirstWord, padCodeWithLeadingZeros } from "../helpers/strings.js";
 

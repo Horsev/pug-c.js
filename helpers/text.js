@@ -1,5 +1,5 @@
 import { processAddress } from "./address.js";
-import { getNumericDate } from "./date.js";
+import { getNumericDate, localeDatetime, roundDatetimeDown } from "./date.js";
 
 import { shortForms } from "../constants/index.js";
 
@@ -25,6 +25,7 @@ export {
   formatLocation,
   getCompanyRegistry,
   fixCityName,
+  formatLastTime,
 };
 
 const getShortForm = (name) => {
@@ -263,6 +264,18 @@ const formatLocation = (location) => {
 const titleToLowerCase = (title) => {
   const [ОПФГ, ...name] = title.split('"');
   return [capitalizeWord(ОПФГ)].join("") + ["", ...name].join('"') || title;
+};
+
+const formatLastTime = (date) => {
+  const updateIntervalInMin = 5;
+
+  const lastUpdate = roundDatetimeDown(date, updateIntervalInMin);
+  const lastUpdateValue = localeDatetime(lastUpdate);
+
+  return {
+    dateTime: lastUpdate,
+    dateTimeValue: lastUpdateValue,
+  };
 };
 
 const getSubtitleRegistry = (cell) => {

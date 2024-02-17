@@ -1,4 +1,4 @@
-export { formatLastTime, getNumericDate, getDateNow };
+export { localeDatetime, roundDatetimeDown, getNumericDate, getDateNow };
 
 const { LOCALE } = process.env;
 
@@ -16,36 +16,23 @@ const dateOptions = {
   day: "numeric",
 };
 
-const getDateNow = () => +new Date();
+const getDateNow = () => new Date();
 
 const roundDatetimeDown = (datetime, intervalInMinutes) => {
-  const newDatetime = new Date(datetime.getTime());
-  const minutes = newDatetime.getMinutes();
+  const minutes = datetime.getMinutes();
   const roundedMinutes =
     Math.floor(minutes / intervalInMinutes) * intervalInMinutes;
-  newDatetime.setMinutes(roundedMinutes);
-  newDatetime.setSeconds(0);
-  newDatetime.setMilliseconds(0);
+  datetime.setMinutes(roundedMinutes);
+  datetime.setSeconds(0);
+  datetime.setMilliseconds(0);
 
-  return newDatetime;
+  return datetime;
 };
 
-const updateIntervalInMin = 5;
-
 const humanizeDatetime = (locale, options) => (datetime) =>
-  datetime.toLocaleDateString(locale, options);
+  new Intl.DateTimeFormat(locale, options).format(datetime);
 
 const localeDatetime = humanizeDatetime(LOCALE, datetimeOptions);
 const localeDate = humanizeDatetime(LOCALE, dateOptions);
-
-const formatLastTime = (date) => {
-  const lastUpdate = roundDatetimeDown(new Date(date), updateIntervalInMin);
-  const lastUpdateValue = localeDatetime(lastUpdate);
-
-  return {
-    dateTime: lastUpdate,
-    dateTimeValue: lastUpdateValue,
-  };
-};
 
 const getNumericDate = (date) => localeDate(new Date(date));
