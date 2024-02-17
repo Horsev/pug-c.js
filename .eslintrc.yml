@@ -3,29 +3,30 @@ env:
   node: true
   es6: true
   es2021: true
-
 parserOptions:
   ecmaVersion: 2021
-  sourceType: "module"
-
+  sourceType: module
 extends:
   - airbnb-base
-  - plugin:prettier/recommended
-
+  - "plugin:prettier/recommended"
 rules:
   prettier/prettier: error
-  "no-magic-numbers":
+  no-magic-numbers:
     - error
-    - ignore: [0, 1]
+    - ignore:
+        - 0
+        - 1
       ignoreDefaultValues: true
-
   import/extensions:
     - error
     - always
-
-  "no-use-before-define":
-    - "error"
+  no-use-before-define:
+    - error
     - functions: false
       classes: false
       variables: false
       allowNamedExports: true
+  no-underscore-dangle:
+    - error
+    - allow:
+        - __ODB__
