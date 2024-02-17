@@ -13,19 +13,29 @@ const createCompanyPage = async (request, result) => {
 
   let templateData = {};
 
+  const filters = {
+    "uglify-js": (script) => uglifyJS.minify(script).code,
+    "no-newline": (html) => html.replace(/\n/g, " "),
+  };
+
   try {
     const response = await fetch(endpoint);
+
+    if (!response.ok) {
+      throw new Error(`Компанію з кодом ${code} не знайдено`);
+    }
+
     const { data } = await response.json();
+
     templateData = {
       ...fullCompany(data),
-      filters: {
-        "uglify-js": (script) => uglifyJS.minify(script).code,
-      },
+      filters,
     };
-  } catch {
+  } catch ({ message }) {
     templateData = {
       error: true,
-      message: "Сервіс тимчасово недоступний",
+      message,
+      filters,
     };
   } finally {
     const template = templateData.error ? "error.pug" : "c.pug";
