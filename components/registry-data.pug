@@ -41,5 +41,9 @@ include ../blocks/section.pug
               else if subtitle.value
                 =subtitle.value
 
+        else if item.subtitle.link && item.subtitle.value
+          dd(itemprop=item.itemprop)
+            a(href=item.subtitle.link)=item.subtitle.value
+
         else
           dd(itemprop=item.itemprop)=item.subtitle
