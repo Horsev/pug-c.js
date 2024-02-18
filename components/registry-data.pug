@@ -19,7 +19,7 @@ include ../blocks/section.pug
           dd(itemprop=item.itemprop)
             p #{item.subtitle.preLink + ", "}
               if item.subtitle.link
-                a( href=item.subtitle.link) #{item.subtitle.txtLink}
+                a.link-offset-2( href=item.subtitle.link) #{item.subtitle.txtLink}
               if item.subtitle.boldText
                 b #{", " + item.subtitle.boldText + ", "}
               if item.subtitle.houseType
@@ -33,17 +33,17 @@ include ../blocks/section.pug
           each subtitle in item.subtitle
             dd(itemprop=item.itemprop) 
               if subtitle.link
-                a(href=subtitle.link)=subtitle.value
+                a.link-offset-2(href=subtitle.link, rel=subtitle.rel)=subtitle.value
               else if subtitle.truncate
                 p.text-truncate.mb-1#truncated=subtitle.value
-                a(href='#' data-odb-truncate-target="#truncated") Розкрити
+                a.link-body-emphasis.link-offset-2.link-underline-opacity-25.link-underline-opacity-75-hover(href='#' data-odb-truncate-target="#truncated") Розкрити
 
               else if subtitle.value
                 =subtitle.value
 
         else if item.subtitle.link && item.subtitle.value
           dd(itemprop=item.itemprop)
-            a(href=item.subtitle.link)=item.subtitle.value
+            a.link-offset-2(href=item.subtitle.link)=item.subtitle.value
 
         else
           dd(itemprop=item.itemprop)=item.subtitle
