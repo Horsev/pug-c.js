@@ -153,7 +153,7 @@ const registryConfig = [
   {
     key: "lastTime",
     value: "Час витягу з ЄДР",
-    class: "col-6",
+    class: "col-12",
     type: "date",
   },
   {
@@ -181,47 +181,47 @@ const registryConfig = [
   {
     key: "email",
     value: "Пошта",
-    class: "col-lg-4 col-12",
+    class: "col-12 col-lg-4",
   },
   {
     key: "webPageDomain",
     value: "Вебсайт",
-    class: "col-lg-4 col-12",
+    class: "col-12 col-lg-4",
   },
   {
     key: "phones",
     value: "Телефон",
-    class: "col-12",
+    class: "col-6 col-md-4",
     itemprop: "telephone",
   },
   {
     key: "registrationDate",
     value: "Дата заснування",
-    class: "col-sm-4 col-6",
+    class: "col-6 col-md-4",
     type: "date",
     itemprop: "foundingDate",
   },
   {
     key: "ceoName",
     value: "Директор",
-    class: "col-sm-4 col-6",
+    class: "col-6 col-md-4",
     itemprop: "employee",
   },
   {
     key: "code",
     value: "Код ЄДРПОУ",
-    class: "col-sm-4 col-6",
+    class: "col-6 col-md-4",
     itemprop: "taxID",
   },
   {
     key: "capital",
     value: "Статутний капітал",
-    class: "col-sm-4 col-6",
+    class: "col-6 col-md-4",
   },
   {
     key: "primaryActivity",
     value: "Основний вид діяльності",
-    class: "col-sm-4 col",
+    class: "col-12",
   },
   {
     key: "activities",
