@@ -6,17 +6,20 @@ include ../blocks/section.pug
     each item in cell
       div(class=item.class)
         dt.fw-normal.text-body-tertiary=item.value
+
         if item.type === 'date'
           dd
             time(datetime=item.subtitle.dateTime)=item.subtitle.dateTimeValue
+
         else if item.key === 'capital'
           dd
             data(value=item.subtitle.dataValue)=item.subtitle.currencyToString
+
         else if item.key === 'address'
           dd(itemprop=item.itemprop)
             p #{item.subtitle.preLink + ", "}
               if item.subtitle.link
-                a( href=item.subtitle.link)=item.subtitle.txtLink
+                a( href=item.subtitle.link) #{item.subtitle.txtLink}
               if item.subtitle.boldText
                 b #{", " + item.subtitle.boldText + ", "}
               if item.subtitle.houseType
@@ -25,14 +28,18 @@ include ../blocks/section.pug
                 sup=item.subtitle.houseLetter
               if item.subtitle.afterAll
                 span #{ ", " + item.subtitle.afterAll}
+
         else if Array.isArray(item.subtitle)
           each subtitle in item.subtitle
             dd(itemprop=item.itemprop) 
               if subtitle.link
                 a(href=subtitle.link)=subtitle.value
+              else if subtitle.truncate
+                p.text-truncate.mb-1#truncated=subtitle.value
+                a(href='#' data-odb-truncate-target="#truncated") Розкрити
+
               else if subtitle.value
                 =subtitle.value
-              else 
-                =subtitle
+
         else
           dd(itemprop=item.itemprop)=item.subtitle
