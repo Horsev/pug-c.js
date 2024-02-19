@@ -8,7 +8,7 @@ import {
   formatPagesSlider,
   formatActivities,
   formatPrimaryActivity,
-  getPhoneNumber,
+  getUAPhoneNumber,
   formatWebPageDomain,
   formatLocation,
   getCompanyRegistry,
@@ -101,7 +101,7 @@ const companyRegistryConfig = [
   },
   { email: ({ email }) => email.toLowerCase() },
   {
-    phones: ({ phones }) => phones.map(getPhoneNumber).filter(Boolean),
+    phones: ({ phones }) => phones.map(getUAPhoneNumber).filter(Boolean),
   },
   {
     registrationDate: ({ registrationDate }) => registrationDate,
@@ -110,7 +110,7 @@ const companyRegistryConfig = [
     capital: ({ capital }) => capital,
   },
   {
-    lastTime: () => formatUpdateTime(new Date()),
+    updateTime: () => formatUpdateTime(new Date()),
   },
   {
     webPageDomain: ({ webPageDomain }) =>
@@ -151,7 +151,7 @@ const extractCompanyData = (registry, _config) => {
 
 const registryConfig = [
   {
-    key: "lastTime",
+    key: "updateTime",
     value: "Час витягу з ЄДР",
     class: "col-12",
     type: "date",

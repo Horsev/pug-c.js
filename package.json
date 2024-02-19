@@ -17,6 +17,7 @@
     "express": "^4.0.0",
     "markdown-it": "^14.0.0",
     "pug": "^3.0.0",
+    "ramda": "^0.29.1",
     "uglify-js": "^3.17.4"
   },
   "devDependencies": {

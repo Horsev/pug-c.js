@@ -3,13 +3,14 @@ import { getNumericDate } from "./date.js";
 
 import { shortForms } from "../constants/index.js";
 
+import { getUAPhoneNumber } from "./phones.js";
+
 import {
   normalizeQuotes,
   capitalizeWord,
   removeMultiSpaces,
   padCodeWithLeadingZeros,
   replaceSeparator,
-  removeNonDigits,
   addSpaceAfterDotAndComma,
   addSpaceВeforeAfterBrackets,
 } from "./strings.js";
@@ -26,7 +27,7 @@ export {
   formatPagesSlider,
   formatActivities,
   formatPrimaryActivity,
-  getPhoneNumber,
+  getUAPhoneNumber,
   formatWebPageDomain,
   formatLocation,
   getCompanyRegistry,
@@ -174,47 +175,6 @@ const formatPrimaryActivity = (primaryActivity) => {
 
   return {
     value: formattedName,
-  };
-};
-
-const getPhoneNumber = (phone) => {
-  if (!phone) return null;
-
-  const parsePhoneNumber = (str) => {
-    const rePrefixPattern = "^(?<prefix>380|0)";
-    const reCodePattern = "(?<code>\\d{2})";
-    const reNumberPattern = "(?<number>\\d{7})$";
-    const re = new RegExp(
-      `${rePrefixPattern}${reCodePattern}${reNumberPattern}`,
-    );
-    return re.exec(str) && re.exec(str).groups;
-  };
-
-  const formatPhoneNumber = ({ code, number }) => {
-    const rePhoneNumber = /^(\d{3})(\d{2})(\d{2})$/;
-    return `+380 (${code}) ${number.replace(rePhoneNumber, "$1-$2-$3")}`;
-  };
-
-  const compose =
-    (...fns) =>
-    (...args) =>
-      fns.reduceRight((res, fn) => [fn.call(null, ...res)], args)[0];
-
-  const formatPhone = compose(
-    formatPhoneNumber,
-    parsePhoneNumber,
-    removeNonDigits,
-  );
-
-  const formatNumberLink = compose(parsePhoneNumber, removeNonDigits);
-
-  const { code = "", number = "" } = formatNumberLink(phone) || {};
-
-  if (!code || !number) return null;
-
-  return {
-    value: formatPhone(phone),
-    link: `tel:+380${code}${number}`,
   };
 };
 
