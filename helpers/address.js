@@ -1,13 +1,13 @@
 import r from "./regex.js";
 
-import { citiesConfig } from "../constants/index.js";
+import { CITIES_CODES } from "../constants/index.js";
 
 import { capitalizeWord } from "./strings.js";
 
 export { processAddress, regexKOATTY, addressCreator };
 
 const atuCodeCreator = (cityName) => {
-  return citiesConfig[cityName] || null;
+  return CITIES_CODES[cityName] || null;
 };
 
 const toTitleCase = (string) => {

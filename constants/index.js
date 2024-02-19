@@ -1,6 +1,10 @@
-export { shortForms, citiesConfig };
+export { UA_ALPHABET, UA_VOWELS, SHORT_ORGANIZATION_FORMS, CITIES_CODES };
 
-const shortForms = {
+const UA_ALPHABET = "а-щьюя'ґєії";
+
+const UA_VOWELS = "ОАИЕІУЯ";
+
+const SHORT_ORGANIZATION_FORMS = {
   "товариство з обмеженою відповідальністю": "ТОВ",
   "фермерське господарство": "ФГ",
   "приватне акціонерне товариство": "ПРАТ",
@@ -9,10 +13,9 @@ const shortForms = {
   "громадська організація": "ГО",
   "комунальне підприємство": "КП",
   "приватне підприємство": "ПП",
-  "регіональна філія": "РФ",
 };
 
-const citiesConfig = {
+const CITIES_CODES = {
   "місто Дніпро": "UA12020010010037010",
   "місто Кам'янське": "UA12040150010056523",
   "місто Кривий Ріг": "UA12060170010065850",

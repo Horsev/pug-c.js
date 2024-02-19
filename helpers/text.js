@@ -1,7 +1,8 @@
 import { processAddress } from "./address.js";
 import { getNumericDate } from "./date.js";
+import { compose } from "./fp.js";
 
-import { shortForms } from "../constants/index.js";
+import { SHORT_ORGANIZATION_FORMS, UA_VOWELS } from "../constants/index.js";
 
 import { getUAPhoneNumber } from "./phones.js";
 
@@ -35,27 +36,32 @@ export {
 
 const LONG_NAME_THRESHOLD = 15;
 const SOFT_HYPHEN = 0x00ad;
-const VOWELS_REGEX = /[ОАИЕІУЯ]/;
 const WORD_HALF = 2;
 
-const getShortForm = (companyName) => {
-  if (!companyName) return "";
+const spaceSymbol = " ";
+const emptyString = "";
+const minusSymbol = "-";
 
-  const longFormFound = Object.keys(shortForms).find((longForm) =>
+const reUaVowels = new RegExp(`[${UA_VOWELS}]+`, "gi");
+
+const getShortForm = (companyName) => {
+  if (!companyName) return emptyString;
+
+  const longFormFound = Object.keys(SHORT_ORGANIZATION_FORMS).find((longForm) =>
     companyName.toLowerCase().includes(longForm),
   );
 
   return longFormFound
     ? companyName.replace(
         new RegExp(longFormFound, "i"),
-        shortForms[longFormFound],
+        SHORT_ORGANIZATION_FORMS[longFormFound],
       )
     : companyName;
 };
 
 const splitLongNames = (text) => {
   const findVowelPosition = (part, isReversed = false) => {
-    const index = part.search(VOWELS_REGEX);
+    const index = part.search(reUaVowels);
     return isReversed ? part.length - index : index + 1;
   };
 
@@ -65,10 +71,13 @@ const splitLongNames = (text) => {
   };
 
   const addHyphenAfterMiddleVowel = (word) => {
-    if (word.includes("-") || word.includes(" ")) return word;
+    if (word.includes(minusSymbol) || word.includes(spaceSymbol)) return word;
 
     const [firstPart, secondPart] = splitWordAtMiddle(word);
-    const reversedFirstPart = firstPart.split("").reverse().join("");
+    const reversedFirstPart = firstPart
+      .split(emptyString)
+      .reverse()
+      .join(emptyString);
 
     const vowelPositionInFirstPart = findVowelPosition(reversedFirstPart, true);
     const vowelPositionInSecondPart = findVowelPosition(secondPart);
@@ -85,14 +94,21 @@ const splitLongNames = (text) => {
     );
   };
 
-  const addHyphenAndSapces = (word) =>
-    word.length > LONG_NAME_THRESHOLD
-      ? addHyphenAfterMiddleVowel(
-          addSpaceAfterDotAndComma(addSpaceВeforeAfterBrackets(word)),
-        )
-      : word;
+  const addHyphenAndSpaces = (word) =>
+    compose(
+      addHyphenAfterMiddleVowel,
+      addSpaceAfterDotAndComma,
+      addSpaceВeforeAfterBrackets,
+    )(word);
 
-  return text.split(" ").map(addHyphenAndSapces).join(" ").trim();
+  const addHyphenAndSapces = (word) =>
+    word.length > LONG_NAME_THRESHOLD ? addHyphenAndSpaces(word) : word;
+
+  return text
+    .split(spaceSymbol)
+    .map(addHyphenAndSapces)
+    .join(spaceSymbol)
+    .trim();
 };
 
 const addSpaceToFirstAndLastQuote = (str) =>
@@ -102,21 +118,17 @@ const solve2QuotesProblem = replaceSeparator('"', [" «", "» "]);
 const solve3QuotesProblem = replaceSeparator('"', [" «", "„", "“»"]);
 const solve4QuotesProblem = replaceSeparator('"', [" «", "» ", " «", "» "]);
 
-const formatAdaptiveName = (companyName) => {
-  try {
-    return removeMultiSpaces(
-      splitLongNames(
-        solve2QuotesProblem(
-          solve3QuotesProblem(
-            solve4QuotesProblem(addSpaceToFirstAndLastQuote(companyName)),
-          ),
-        ),
-      ),
-    );
-  } catch (error) {
-    return companyName;
-  }
-};
+const getFormatedCompanyName = compose(
+  removeMultiSpaces,
+  splitLongNames,
+  solve2QuotesProblem,
+  solve3QuotesProblem,
+  solve4QuotesProblem,
+  addSpaceToFirstAndLastQuote,
+);
+
+const formatAdaptiveName = (companyName) =>
+  getFormatedCompanyName(companyName) || companyName;
 
 const companyUrl = (code) => {
   const correctedCode = padCodeWithLeadingZeros(code);
@@ -129,7 +141,7 @@ const transformCompany = ({ name, code }) => ({
 });
 
 const formatKvedClass = ([, word, ...rest]) =>
-  `${capitalizeWord(word)} ${rest.join(" ").toLowerCase()}`;
+  `${capitalizeWord(word)} ${rest.join(spaceSymbol).toLowerCase()}`;
 
 const formatPagesSlider = (pages) => {
   if (!pages || pages.length === 0) return [];
@@ -167,10 +179,10 @@ const formatActivities = (activities) => {
 const formatPrimaryActivity = (primaryActivity) => {
   if (!primaryActivity) return {};
 
-  const [searchKved, word, ...rest] = primaryActivity.split(" ");
+  const [searchKved, word, ...rest] = primaryActivity.split(spaceSymbol);
 
   const formattedName = `${searchKved} ${capitalizeWord(word)} ${rest
-    .join(" ")
+    .join(spaceSymbol)
     .toLowerCase()}`;
 
   return {
@@ -196,7 +208,10 @@ const formatLocation = (location) => {
 
 const titleToLowerCase = (title) => {
   const [ОПФГ, ...name] = title.split('"');
-  return [capitalizeWord(ОПФГ)].join("") + ["", ...name].join('"') || title;
+  return (
+    [capitalizeWord(ОПФГ)].join(emptyString) +
+      [emptyString, ...name].join('"') || title
+  );
 };
 
 const getSubtitleRegistry = (cell) => {
@@ -204,7 +219,7 @@ const getSubtitleRegistry = (cell) => {
 
   if (Array.isArray(cell.subtitle) && !cell.subtitle.length) return null;
 
-  let subtitle = "";
+  let subtitle = emptyString;
 
   switch (cell.key) {
     case "fullName":
