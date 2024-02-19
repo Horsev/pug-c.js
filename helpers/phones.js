@@ -1,9 +1,6 @@
 import { compose } from "./fp.js";
 import { removeNonDigits } from "./strings.js";
 
-// eslint-disable-next-line import/prefer-default-export
-export { getUAPhoneNumber };
-
 const parsePhoneNumber = (str) => {
   const rePrefixPattern = "^(?<prefix>380|0)";
   const reCodePattern = "(?<code>\\d{2})";
@@ -37,3 +34,5 @@ const getUAPhoneNumber = (phone) => {
     link: `tel:+380${code}${number}`,
   };
 };
+
+export default getUAPhoneNumber;

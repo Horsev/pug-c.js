@@ -4,7 +4,7 @@ import { compose } from "./fp.js";
 
 import { SHORT_ORGANIZATION_FORMS, UA_VOWELS } from "../constants/index.js";
 
-import { getUAPhoneNumber } from "./phones.js";
+import getUAPhoneNumber from "./phones.js";
 
 import {
   normalizeQuotes,

@@ -1,3 +1,7 @@
+import { COMPANY_CODE_LENGTH } from "../constants/index.js";
+
+export { r, reCompanyCode };
+
 const r = (re, flags = "u") =>
   new RegExp(
     re
@@ -7,4 +11,7 @@ const r = (re, flags = "u") =>
     flags,
   );
 
-export default r;
+const getReCompanyCode = (companyCodeLength) =>
+  r(`^\\d{${companyCodeLength}}$`);
+
+const reCompanyCode = getReCompanyCode(COMPANY_CODE_LENGTH);

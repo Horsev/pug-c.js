@@ -1,8 +1,12 @@
-import r from "./regex.js";
+import { r } from "./regex.js";
 
-import { CITIES_CODES } from "../constants/index.js";
+import {
+  CITIES_CODES,
+  UA_ALPHABET,
+  КАТОТТГ_FIRST_LEVEL_CODES,
+} from "../constants/index.js";
 
-import { capitalizeWord } from "./strings.js";
+import { capitalizeWord, toLowerCase } from "./strings.js";
 
 export { processAddress, regexKOATTY, addressCreator };
 
@@ -11,30 +15,30 @@ const atuCodeCreator = (cityName) => {
 };
 
 const toTitleCase = (string) => {
-  const ukWordRegex = /[а-щєґіїюяь']+/gi;
+  const ukWordRegex = new RegExp(`[${UA_ALPHABET}]+`, "gi");
 
-  const replaceWords = (regex, callback) => (str) =>
+  const replaceWords = (regex, callback, str) =>
     typeof str === "string" ? str.replace(regex, callback) : str;
 
-  return replaceWords(ukWordRegex, capitalizeWord)(string);
+  return replaceWords(ukWordRegex, capitalizeWord, string);
 };
 
 const processAddress = (location) => {
-  const uaAlphabet = "а-щєґіїюяь'";
-
-  const ual = `[${uaAlphabet}\\-\\.\\s()\\d]+`;
-  const uald = `[${uaAlphabet}\\-\\.\\s()\\d/]+`;
+  const ual = `[${UA_ALPHABET}\\-\\.\\s()\\d]+`;
+  const uald = `[${UA_ALPHABET}\\-\\.\\s()\\d/]+`;
 
   const separator = ",\\s";
 
   const stateSuffix = ["обл\\."].join("|");
   const regionSuffix = ["р-н", "район"].join("|");
+
   const cityPrefix = [
     "селище\\sміського\\sтипу",
     "місто",
     "село",
     "селище",
   ].join("|");
+
   const streetsPrefix = [
     "вулиця",
     "вул\\.",
@@ -47,6 +51,7 @@ const processAddress = (location) => {
     "шосе",
     "набережна",
   ].join("|");
+
   const streetsSuffix = [
     "бульвар",
     "шосе",
@@ -57,6 +62,7 @@ const processAddress = (location) => {
     "набережна",
     "дорога",
   ].join("|");
+
   const buildingPrefix = ["будинок"].join("|");
   const blockPrefix = ["корпус"].join("|");
   const roomPrefix = [
@@ -127,8 +133,6 @@ const processAddress = (location) => {
     const { UK, zip, city, state, street, region, building, block, room } =
       address;
 
-    const toLowerCase = (str) => str.toLowerCase();
-
     const addSpaceAfteDot = /\.(?=[^\s])/g;
     const doubleSpace = /  +/g;
 
@@ -164,6 +168,9 @@ const processAddress = (location) => {
   return typograph(parsedAddresses) || location;
 };
 
+const processAndJoinAddress = (addr) =>
+  Object.values(processAddress(addr)).filter(Boolean).join(", ");
+
 const regexKOATTY = (location) => {
   const { zip, country, parts, address } = location;
 
@@ -173,9 +180,6 @@ const regexKOATTY = (location) => {
     (typeof input === "object" &&
       !Array.isArray(input) &&
       Object.keys(input).length === 0);
-
-  const processAndJoinAddress = (_addr) =>
-    Object.values(processAddress(_addr)).filter(Boolean).join(", ");
 
   if (isEmptyCollection(parts)) return processAndJoinAddress(address);
 
@@ -193,35 +197,7 @@ const regexKOATTY = (location) => {
 
   const [settlement, ...rest] = atu.split(", ").reverse();
 
-  const КАТОТТГFirstLevelCodes = [
-    "01",
-    "05",
-    "07",
-    "12",
-    "14",
-    "18",
-    "21",
-    "23",
-    "26",
-    "32",
-    "35",
-    "44",
-    "46",
-    "48",
-    "51",
-    "53",
-    "56",
-    "59",
-    "61",
-    "63",
-    "65",
-    "68",
-    "71",
-    "73",
-    "74",
-    "80",
-    "85",
-  ].join("|");
+  const КАТОТТГFirstLevelCodes = КАТОТТГ_FIRST_LEVEL_CODES.join("|");
 
   const reКАТОТТГFirstLevel = new RegExp(
     `^(${КАТОТТГFirstLevelCodes})\\d{15}$`,
@@ -230,7 +206,8 @@ const regexKOATTY = (location) => {
   const КАТОТТГ = reКАТОТТГFirstLevel.test(atuCode)
     ? `UA${atuCode}`
     : atuCodeCreator(settlement);
-  const reAlphabetUA = "[a-щьюяґєії]";
+
+  const reAlphabetUA = `[a-щьюяґєії]`;
 
   const reSplitNumberLetter = r(
     String.raw`
@@ -251,8 +228,6 @@ const regexKOATTY = (location) => {
   const parsedHouse = reSplitNumberLetter.test(house)
     ? house.toLowerCase().match(reSplitNumberLetter).groups
     : { houseNumber: house };
-
-  const toLowerCase = (str) => str.toLowerCase();
 
   const addSpaceAfteDot = /\.(?=[^\s])/g;
   const doubleSpace = /  +/g;

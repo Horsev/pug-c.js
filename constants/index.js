@@ -1,8 +1,47 @@
-export { UA_ALPHABET, UA_VOWELS, SHORT_ORGANIZATION_FORMS, CITIES_CODES };
+export {
+  UA_ALPHABET,
+  COMPANY_CODE_LENGTH,
+  UA_VOWELS,
+  SHORT_ORGANIZATION_FORMS,
+  CITIES_CODES,
+  КАТОТТГ_FIRST_LEVEL_CODES,
+};
 
 const UA_ALPHABET = "а-щьюя'ґєії";
 
-const UA_VOWELS = "ОАИЕІУЯ";
+const COMPANY_CODE_LENGTH = 8;
+
+const UA_VOWELS = "ОАИЕУЯЮЯЄІЇ";
+
+const КАТОТТГ_FIRST_LEVEL_CODES = [
+  "01",
+  "05",
+  "07",
+  "12",
+  "14",
+  "18",
+  "21",
+  "23",
+  "26",
+  "32",
+  "35",
+  "44",
+  "46",
+  "48",
+  "51",
+  "53",
+  "56",
+  "59",
+  "61",
+  "63",
+  "65",
+  "68",
+  "71",
+  "73",
+  "74",
+  "80",
+  "85",
+];
 
 const SHORT_ORGANIZATION_FORMS = {
   "товариство з обмеженою відповідальністю": "ТОВ",
