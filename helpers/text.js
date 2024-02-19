@@ -8,6 +8,10 @@ import {
   capitalizeWord,
   removeMultiSpaces,
   padCodeWithLeadingZeros,
+  replaceSeparator,
+  removeNonDigits,
+  addSpaceAfterDotAndComma,
+  addSpaceВeforeAfterBrackets,
 } from "./strings.js";
 
 import { isValidCompanyCode } from "./validators.js";
@@ -26,39 +30,41 @@ export {
   formatWebPageDomain,
   formatLocation,
   getCompanyRegistry,
-  fixCityName,
 };
-
-const getShortForm = (name) => {
-  if (!name) return "";
-
-  const entry = Object.entries(shortForms).find(([key]) =>
-    name.toLowerCase().includes(key.toLowerCase()),
-  );
-
-  return entry ? name.replace(new RegExp(entry[0], "i"), entry[1]) : name;
-};
-
-const fixCityName = (name) => name.replace(/(м\.)(?!\s)/g, "$1 ");
 
 const LONG_NAME_THRESHOLD = 15;
 const SOFT_HYPHEN = 0x00ad;
 const VOWELS_REGEX = /[ОАИЕІУЯ]/;
 const WORD_HALF = 2;
 
+const getShortForm = (companyName) => {
+  if (!companyName) return "";
+
+  const longFormFound = Object.keys(shortForms).find((longForm) =>
+    companyName.toLowerCase().includes(longForm),
+  );
+
+  return longFormFound
+    ? companyName.replace(
+        new RegExp(longFormFound, "i"),
+        shortForms[longFormFound],
+      )
+    : companyName;
+};
+
 const splitLongNames = (text) => {
+  const findVowelPosition = (part, isReversed = false) => {
+    const index = part.search(VOWELS_REGEX);
+    return isReversed ? part.length - index : index + 1;
+  };
+
+  const splitWordAtMiddle = (_word) => {
+    const position = Math.ceil(_word.length / WORD_HALF);
+    return [_word.slice(0, position), _word.slice(position)];
+  };
+
   const addHyphenAfterMiddleVowel = (word) => {
     if (word.includes("-") || word.includes(" ")) return word;
-
-    const findVowelPosition = (part, isReversed = false) => {
-      const index = part.search(VOWELS_REGEX);
-      return isReversed ? part.length - index : index + 1;
-    };
-
-    const splitWordAtMiddle = (_word) => {
-      const position = Math.ceil(_word.length / WORD_HALF);
-      return [_word.slice(0, position), _word.slice(position)];
-    };
 
     const [firstPart, secondPart] = splitWordAtMiddle(word);
     const reversedFirstPart = firstPart.split("").reverse().join("");
@@ -78,65 +84,36 @@ const splitLongNames = (text) => {
     );
   };
 
-  const addSpaceAfterDotAndComma = (word) =>
-    word.split(".").join(". ").split(",").join(", ");
+  const addHyphenAndSapces = (word) =>
+    word.length > LONG_NAME_THRESHOLD
+      ? addHyphenAfterMiddleVowel(
+          addSpaceAfterDotAndComma(addSpaceВeforeAfterBrackets(word)),
+        )
+      : word;
 
-  const addSpaceВeforeAfterBrackets = (word) =>
-    word.split("(").join(" (").split(")").join(") ");
-
-  return text
-    .split(" ")
-    .map((word) =>
-      word.length > LONG_NAME_THRESHOLD
-        ? addHyphenAfterMiddleVowel(
-            addSpaceAfterDotAndComma(addSpaceВeforeAfterBrackets(word)),
-          )
-        : word,
-    )
-    .join(" ")
-    .trim();
+  return text.split(" ").map(addHyphenAndSapces).join(" ").trim();
 };
 
-const addSpaceToFirstAndLastQuote = (text) =>
-  text
-    .replace('"', ' "')
-    .split("")
-    .reverse()
-    .join("")
-    .replace('"', ' "')
-    .split("")
-    .reverse()
-    .join("")
-    .trim();
-
-const joinSeparators = (separators) => (acc, val, index) =>
-  acc + (val + (separators[index] || ""));
-
-const replaceSeparator = (separator, separators) => (string) => {
-  const splitedSttring = string.split(separator);
-
-  return splitedSttring.length - 1 === separators.length
-    ? splitedSttring.reduce(joinSeparators(separators), "").trim()
-    : string;
-};
+const addSpaceToFirstAndLastQuote = (str) =>
+  str.replace(/^([^"]*)"/, '$1 "').replace(/"([^"]*$)/, '" $1');
 
 const solve2QuotesProblem = replaceSeparator('"', [" «", "» "]);
 const solve3QuotesProblem = replaceSeparator('"', [" «", "„", "“»"]);
 const solve4QuotesProblem = replaceSeparator('"', [" «", "» ", " «", "» "]);
 
-const formatAdaptiveName = (name) => {
+const formatAdaptiveName = (companyName) => {
   try {
     return removeMultiSpaces(
       splitLongNames(
         solve2QuotesProblem(
           solve3QuotesProblem(
-            solve4QuotesProblem(addSpaceToFirstAndLastQuote(name)),
+            solve4QuotesProblem(addSpaceToFirstAndLastQuote(companyName)),
           ),
         ),
       ),
     );
   } catch (error) {
-    return name;
+    return companyName;
   }
 };
 
@@ -203,11 +180,6 @@ const formatPrimaryActivity = (primaryActivity) => {
 const getPhoneNumber = (phone) => {
   if (!phone) return null;
 
-  const removeNonDigits = (str) => {
-    const reNonDigits = /\D+/g;
-    return str.replace(reNonDigits, "");
-  };
-
   const parsePhoneNumber = (str) => {
     const rePrefixPattern = "^(?<prefix>380|0)";
     const reCodePattern = "(?<code>\\d{2})";
@@ -233,6 +205,7 @@ const getPhoneNumber = (phone) => {
     parsePhoneNumber,
     removeNonDigits,
   );
+
   const formatNumberLink = compose(parsePhoneNumber, removeNonDigits);
 
   const { code = "", number = "" } = formatNumberLink(phone) || {};

@@ -6,6 +6,32 @@ export {
   removeMultiSpaces,
   capitalizeString,
   padCodeWithLeadingZeros,
+  replaceSeparator,
+  removeNonDigits,
+  addSpaceAfterDotAndComma,
+  addSpaceВeforeAfterBrackets,
+};
+
+const addSpaceAfterDotAndComma = (str) =>
+  str.replace(/,([^ ])/g, ", $1").replace(/\.([^ ])/g, ". $1");
+
+const addSpaceВeforeAfterBrackets = (str) =>
+  str.replace(/([^\s])(\()/g, "$1 $2").replace(/(\))([^\s])/g, "$1 $2");
+
+const removeNonDigits = (str) => {
+  const reNonDigits = /\D+/g;
+  return str.replace(reNonDigits, "");
+};
+
+const joinSeparators = (separators) => (acc, val, index) =>
+  acc + (val + (separators[index] || ""));
+
+const replaceSeparator = (separator, separators) => (string) => {
+  const splitedSttring = string.split(separator);
+
+  return splitedSttring.length - 1 === separators.length
+    ? splitedSttring.reduce(joinSeparators(separators), "").trim()
+    : string;
 };
 
 const reMultiSpaces = /\s+/g;
