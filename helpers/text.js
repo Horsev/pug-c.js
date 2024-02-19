@@ -8,8 +8,9 @@ import {
   capitalizeWord,
   removeMultiSpaces,
   padCodeWithLeadingZeros,
-  validateCompanyCode,
 } from "./strings.js";
+
+import { isValidCompanyCode } from "./validators.js";
 
 import { formatLocalCurrency } from "./numbers.js";
 
@@ -141,7 +142,7 @@ const formatAdaptiveName = (name) => {
 
 const companyUrl = (code) => {
   const correctedCode = padCodeWithLeadingZeros(code);
-  return code && validateCompanyCode(code) && `/c/${correctedCode}`;
+  return code && isValidCompanyCode(code) && `/c/${correctedCode}`;
 };
 
 const transformCompany = ({ name, code }) => ({
