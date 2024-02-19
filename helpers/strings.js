@@ -26,8 +26,8 @@ const uaAlphabet = "а-щьюя'ґєії";
 
 const uaLetters = new RegExp(`[${uaAlphabet}]+`, "gi");
 
-const capitalizeWord = ([firstLetter, ...rest]) =>
-  firstLetter.toUpperCase() + rest.join("").toLowerCase();
+const capitalizeWord = ([firstLetter = "", ...rest]) =>
+  firstLetter && firstLetter.toUpperCase() + rest.join("").toLowerCase();
 
 const capitalizeString = (string) => string.replace(uaLetters, capitalizeWord);
 
