@@ -3,14 +3,18 @@ export {
   getFirstWord,
   normalizeQuotes,
   capitalizeWord,
+  removeMultiSpaces,
   capitalizeString,
   padCodeWithLeadingZeros,
   validateCompanyCode,
 };
 
-const COMPANY_CODE_LENGTH = 8;
+const reMultiSpaces = /\s+/g;
+const replaceRegex = (re, value) => (string) => string.replace(re, value);
+const removeMultiSpaces = replaceRegex(reMultiSpaces, " ");
 
-const reCompanyCode = new RegExp(`^\\d{${COMPANY_CODE_LENGTH}}$`);
+const companyCodeLength = 8;
+const reCompanyCode = new RegExp(`^\\d{${companyCodeLength}}$`);
 
 const isCompanyCode = (string) => reCompanyCode.test(string);
 
@@ -27,7 +31,7 @@ const capitalizeWord = ([firstLetter, ...rest]) =>
 
 const capitalizeString = (string) => string.replace(uaLetters, capitalizeWord);
 
-const padCodeWithLeadingZeros = (code, length = COMPANY_CODE_LENGTH) =>
+const padCodeWithLeadingZeros = (code, length = companyCodeLength) =>
   String(code).padStart(length, "0");
 
 const validateCompanyCode = (companyCode) => {

@@ -6,6 +6,7 @@ import { shortForms } from "../constants/index.js";
 import {
   normalizeQuotes,
   capitalizeWord,
+  removeMultiSpaces,
   padCodeWithLeadingZeros,
   validateCompanyCode,
 } from "./strings.js";
@@ -107,30 +108,29 @@ const addSpaceToFirstAndLastQuote = (text) =>
     .join("")
     .trim();
 
-const QUOTES_FOR_3_QUOTES_PROBLEM = 4;
-const QUOTES_FOR_2_QUOTES_PROBLEM = 3;
+const joinSeparators = (separators) => (acc, val, index) =>
+  acc + (val + (separators[index] || ""));
 
-const solve3QuotesProblem = (text) =>
-  text.split('"').length === QUOTES_FOR_3_QUOTES_PROBLEM
-    ? text.replace('"', " «").replace('"', "„").replace('"', "“»").trim()
-    : text;
+const replaceSeparator = (separator, separators) => (string) => {
+  const splitedSttring = string.split(separator);
 
-const solve2QuotesProblem = (text) =>
-  text.split('"').length === QUOTES_FOR_2_QUOTES_PROBLEM
-    ? text.replace('"', " «").replace('"', "» ").trim()
-    : text;
-
-const removeMultiSpaces = (text) => {
-  const reMultiSpaces = /\s\s+/g;
-  return text.replace(reMultiSpaces, " ");
+  return splitedSttring.length - 1 === separators.length
+    ? splitedSttring.reduce(joinSeparators(separators), "").trim()
+    : string;
 };
+
+const solve2QuotesProblem = replaceSeparator('"', [" «", "» "]);
+const solve3QuotesProblem = replaceSeparator('"', [" «", "„", "“»"]);
+const solve4QuotesProblem = replaceSeparator('"', [" «", "» ", " «", "» "]);
 
 const formatAdaptiveName = (name) => {
   try {
     return removeMultiSpaces(
       splitLongNames(
         solve2QuotesProblem(
-          solve3QuotesProblem(addSpaceToFirstAndLastQuote(name)),
+          solve3QuotesProblem(
+            solve4QuotesProblem(addSpaceToFirstAndLastQuote(name)),
+          ),
         ),
       ),
     );
