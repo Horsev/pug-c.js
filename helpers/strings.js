@@ -1,8 +1,6 @@
 import { UA_ALPHABET, COMPANY_CODE_LENGTH } from "../constants/index.js";
-import { reCompanyCode } from "./regex.js";
 
 export {
-  isCompanyCode,
   getFirstWord,
   normalizeQuotes,
   capitalizeWord,
@@ -11,15 +9,17 @@ export {
   padCodeWithLeadingZeros,
   replaceSeparator,
   removeNonDigits,
-  addSpaceAfterDotAndComma,
+  addSpaceAfterComma,
+  addSpaceAfterDot,
   addSpaceВeforeAfterBrackets,
   toLowerCase,
 };
 
 const toLowerCase = (str) => str.toLowerCase();
 
-const addSpaceAfterDotAndComma = (str) =>
-  str.replace(/,([^ ])/g, ", $1").replace(/\.([^ ])/g, ". $1");
+const addSpaceAfterComma = (str) => str.replace(/,([^ ])/g, ", $1");
+
+const addSpaceAfterDot = (str) => str.replace(/\.([^ ])/g, ". $1");
 
 const addSpaceВeforeAfterBrackets = (str) =>
   str.replace(/([^\s])(\()/g, "$1 $2").replace(/(\))([^\s])/g, "$1 $2");
@@ -44,18 +44,18 @@ const reMultiSpaces = /\s+/g;
 const replaceRegex = (re, value) => (string) => string.replace(re, value);
 const removeMultiSpaces = replaceRegex(reMultiSpaces, " ");
 
-const isCompanyCode = (string) => reCompanyCode.test(string);
-
-const getFirstWord = (str) => (str ? str.split(" ")[0] : "");
+const getFirstWord = (str = "") => {
+  const [firstWord] = str.split(" ");
+  return firstWord;
+};
 
 const normalizeQuotes = (text) => text.replace(/[«»“”]/gi, '"');
-
-const uaLetters = new RegExp(`[${UA_ALPHABET}]+`, "gi");
 
 const capitalizeWord = ([firstLetter = "", ...rest]) =>
   firstLetter && firstLetter.toUpperCase() + rest.join("").toLowerCase();
 
-const capitalizeString = (string) => string.replace(uaLetters, capitalizeWord);
+const capitalizeString = (string) =>
+  string.replace(UA_ALPHABET, capitalizeWord);
 
 const padCodeWithLeadingZeros = (code, length = COMPANY_CODE_LENGTH) =>
   String(code).padStart(length, "0");

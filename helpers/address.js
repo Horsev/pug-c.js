@@ -1,4 +1,5 @@
 import { r } from "./regex.js";
+import { compose } from "./fp.js";
 
 import {
   CITIES_CODES,
@@ -10,71 +11,64 @@ import { capitalizeWord, toLowerCase } from "./strings.js";
 
 export { processAddress, regexKOATTY, addressCreator };
 
-const atuCodeCreator = (cityName) => {
-  return CITIES_CODES[cityName] || null;
-};
+const atuCodeCreator = (cityName) => CITIES_CODES[cityName] || null;
 
-const toTitleCase = (string) => {
-  const ukWordRegex = new RegExp(`[${UA_ALPHABET}]+`, "gi");
+const ukWordRegex = new RegExp(`[${UA_ALPHABET}]+`, "gi");
 
-  const replaceWords = (regex, callback, str) =>
-    typeof str === "string" ? str.replace(regex, callback) : str;
+const replaceWords = (regex, callback, str) =>
+  typeof str === "string" ? str.replace(regex, callback) : str;
 
-  return replaceWords(ukWordRegex, capitalizeWord, string);
-};
+const toTitleCase = (string) =>
+  replaceWords(ukWordRegex, capitalizeWord, string);
 
-const processAddress = (location) => {
-  const ual = `[${UA_ALPHABET}\\-\\.\\s()\\d]+`;
-  const uald = `[${UA_ALPHABET}\\-\\.\\s()\\d/]+`;
+const ual = `[${UA_ALPHABET}\\-\\.\\s()\\d]+`;
+const uald = `[${UA_ALPHABET}\\-\\.\\s()\\d/]+`;
 
-  const separator = ",\\s";
+const separator = ",\\s";
 
-  const stateSuffix = ["обл\\."].join("|");
-  const regionSuffix = ["р-н", "район"].join("|");
+const stateSuffix = ["обл\\."].join("|");
+const regionSuffix = ["р-н", "район"].join("|");
 
-  const cityPrefix = [
-    "селище\\sміського\\sтипу",
-    "місто",
-    "село",
-    "селище",
-  ].join("|");
+const cityPrefix = ["селище\\sміського\\sтипу", "місто", "село", "селище"].join(
+  "|",
+);
 
-  const streetsPrefix = [
-    "вулиця",
-    "вул\\.",
-    "провулок",
-    "пров\\.",
-    "проспект",
-    "просп.",
-    "пр\\.",
-    "бульвар",
-    "шосе",
-    "набережна",
-  ].join("|");
+const streetsPrefix = [
+  "вулиця",
+  "вул\\.",
+  "провулок",
+  "пров\\.",
+  "проспект",
+  "просп.",
+  "пр\\.",
+  "бульвар",
+  "шосе",
+  "набережна",
+].join("|");
 
-  const streetsSuffix = [
-    "бульвар",
-    "шосе",
-    "площа",
-    "пл.",
-    "проспект",
-    "узвіз",
-    "набережна",
-    "дорога",
-  ].join("|");
+const streetsSuffix = [
+  "бульвар",
+  "шосе",
+  "площа",
+  "пл.",
+  "проспект",
+  "узвіз",
+  "набережна",
+  "дорога",
+].join("|");
 
-  const buildingPrefix = ["будинок"].join("|");
-  const blockPrefix = ["корпус"].join("|");
-  const roomPrefix = [
-    "квартира",
-    "приміщення",
-    "офіс",
-    "кабінет",
-    "нежиле\\sприміщення",
-  ].join("|");
+const buildingPrefix = ["будинок"].join("|");
+const blockPrefix = ["корпус"].join("|");
+const roomPrefix = [
+  "квартира",
+  "приміщення",
+  "офіс",
+  "кабінет",
+  "нежиле\\sприміщення",
+].join("|");
 
-  const re = r(
-    String.raw`
+const re = r(
+  String.raw`
   # Address parser
   (?<UK>Україна)
   
@@ -120,68 +114,64 @@ const processAddress = (location) => {
     (?<room>(${roomPrefix})\s${uald})
   )?
   `,
-    "i",
-  );
+  "i",
+);
 
-  const parser = (address) =>
-    address && address.match(re) ? re.exec(address).groups : { address };
+const parser = (address) =>
+  address && address.match(re) ? re.exec(address).groups : { address };
 
-  const parsedAddresses = parser(location) || location;
+const typograph = (address) => {
+  if (!address || address.address) return address;
+  const { UK, zip, city, state, street, region, building, block, room } =
+    address;
 
-  const typograph = (address) => {
-    if (!address || address.address) return address;
-    const { UK, zip, city, state, street, region, building, block, room } =
-      address;
+  const addSpaceAfteDot = /\.(?=[^\s])/g;
+  const doubleSpace = /\s+/g;
 
-    const addSpaceAfteDot = /\.(?=[^\s])/g;
-    const doubleSpace = /  +/g;
-
-    return {
-      UK: UK && UK.replace(/Україна/i, "Україна"),
-      zip,
-      state: state && state.replace(/обл\./, "область"),
-      region: region && region.replace(/р-н/i, "район"),
-      city,
-      street:
-        street &&
-        street
-          .trim()
-          .replace(/вул\./i, "вулиця ")
-          .replace(/просп\.|пр\./i, "проспект ")
-          .replace(/пров\./i, "провулок ")
-          .replace(/пл\./i, "площа ")
-          .replace(doubleSpace, " ")
-          .replace(addSpaceAfteDot, ". ")
-          .split(" ")
-          .map(toTitleCase)
-          .join(" ")
-          .replace(
-            /проспект|площа|вулиця|бульвар|провулок|шосе|набережна/i,
-            toLowerCase,
-          ),
-      building: building && building.replace(/будинок/i, "будинок"),
-      block: block && block.replace(/корпус/i, "корпус"),
-      room: room && room.replace(/квартира/i, "квартира"),
-    };
+  return {
+    UK: UK && UK.replace(/Україна/i, "Україна"),
+    zip,
+    state: state && state.replace(/обл\./, "область"),
+    region: region && region.replace(/р-н/i, "район"),
+    city,
+    street:
+      street &&
+      street
+        .trim()
+        .replace(/вул\./i, "вулиця ")
+        .replace(/просп\.|пр\./i, "проспект ")
+        .replace(/пров\./i, "провулок ")
+        .replace(/пл\./i, "площа ")
+        .replace(doubleSpace, " ")
+        .replace(addSpaceAfteDot, ". ")
+        .split(" ")
+        .map(toTitleCase)
+        .join(" ")
+        .replace(
+          /проспект|площа|вулиця|бульвар|провулок|шосе|набережна/i,
+          toLowerCase,
+        ),
+    building: building && building.replace(/будинок/i, "будинок"),
+    block: block && block.replace(/корпус/i, "корпус"),
+    room: room && room.replace(/квартира/i, "квартира"),
   };
-
-  return typograph(parsedAddresses) || location;
 };
 
-const processAndJoinAddress = (addr) =>
-  Object.values(processAddress(addr)).filter(Boolean).join(", ");
+const parseAddress = compose(typograph, parser);
+
+const processAddress = (address) => parseAddress(address);
+
+const addressToString = (address) =>
+  Object.values(processAddress(address)).filter(Boolean).join(", ");
+
+const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 const regexKOATTY = (location) => {
   const { zip, country, parts, address } = location;
 
-  const isEmptyCollection = (input) =>
-    !input ||
-    (Array.isArray(input) && input.length === 0) ||
-    (typeof input === "object" &&
-      !Array.isArray(input) &&
-      Object.keys(input).length === 0);
+  if (isEmptyObject(parts)) return addressToString(address);
 
-  if (isEmptyCollection(parts)) return processAndJoinAddress(address);
+  const reAlphabetUA = `[a-щьюяґєії]`;
 
   const {
     atu,
@@ -206,8 +196,6 @@ const regexKOATTY = (location) => {
   const КАТОТТГ = reКАТОТТГFirstLevel.test(atuCode)
     ? `UA${atuCode}`
     : atuCodeCreator(settlement);
-
-  const reAlphabetUA = `[a-щьюяґєії]`;
 
   const reSplitNumberLetter = r(
     String.raw`

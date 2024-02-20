@@ -1,6 +1,4 @@
-import { COMPANY_CODE_LENGTH } from "../constants/index.js";
-
-export { r, reCompanyCode };
+export { r };
 
 const r = (re, flags = "u") =>
   new RegExp(
@@ -10,8 +8,3 @@ const r = (re, flags = "u") =>
       .replace(/\s/gm, ""),
     flags,
   );
-
-const getReCompanyCode = (companyCodeLength) =>
-  r(`^\\d{${companyCodeLength}}$`);
-
-const reCompanyCode = getReCompanyCode(COMPANY_CODE_LENGTH);

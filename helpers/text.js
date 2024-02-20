@@ -10,9 +10,9 @@ import {
   normalizeQuotes,
   capitalizeWord,
   removeMultiSpaces,
-  padCodeWithLeadingZeros,
   replaceSeparator,
-  addSpaceAfterDotAndComma,
+  addSpaceAfterComma,
+  addSpaceAfterDot,
   addSpaceВeforeAfterBrackets,
 } from "./strings.js";
 
@@ -59,57 +59,51 @@ const getShortForm = (companyName) => {
     : companyName;
 };
 
-const splitLongNames = (text) => {
-  const findVowelPosition = (part, isReversed = false) => {
-    const index = part.search(reUaVowels);
-    return isReversed ? part.length - index : index + 1;
-  };
-
-  const splitWordAtMiddle = (_word) => {
-    const position = Math.ceil(_word.length / WORD_HALF);
-    return [_word.slice(0, position), _word.slice(position)];
-  };
-
-  const addHyphenAfterMiddleVowel = (word) => {
-    if (word.includes(minusSymbol) || word.includes(spaceSymbol)) return word;
-
-    const [firstPart, secondPart] = splitWordAtMiddle(word);
-    const reversedFirstPart = firstPart
-      .split(emptyString)
-      .reverse()
-      .join(emptyString);
-
-    const vowelPositionInFirstPart = findVowelPosition(reversedFirstPart, true);
-    const vowelPositionInSecondPart = findVowelPosition(secondPart);
-
-    const vowelPosition =
-      vowelPositionInFirstPart < vowelPositionInSecondPart
-        ? vowelPositionInFirstPart
-        : vowelPositionInFirstPart + vowelPositionInSecondPart - 1;
-
-    return (
-      word.slice(0, vowelPosition) +
-      String.fromCharCode(SOFT_HYPHEN) +
-      word.slice(vowelPosition)
-    );
-  };
-
-  const addHyphenAndSpaces = (word) =>
-    compose(
-      addHyphenAfterMiddleVowel,
-      addSpaceAfterDotAndComma,
-      addSpaceВeforeAfterBrackets,
-    )(word);
-
-  const addHyphenAndSapces = (word) =>
-    word.length > LONG_NAME_THRESHOLD ? addHyphenAndSpaces(word) : word;
-
-  return text
-    .split(spaceSymbol)
-    .map(addHyphenAndSapces)
-    .join(spaceSymbol)
-    .trim();
+const findVowelPosition = (part, isReversed = false) => {
+  const index = part.search(reUaVowels);
+  return isReversed ? part.length - index : index + 1;
 };
+
+const addHyphenAfterMiddleVowel = (word) => {
+  if (word.includes(minusSymbol) || word.includes(spaceSymbol)) return word;
+
+  const [firstPart, secondPart] = splitWordAtMiddle(word);
+  const reversedFirstPart = firstPart
+    .split(emptyString)
+    .reverse()
+    .join(emptyString);
+
+  const vowelPositionInFirstPart = findVowelPosition(reversedFirstPart, true);
+  const vowelPositionInSecondPart = findVowelPosition(secondPart);
+
+  const vowelPosition =
+    vowelPositionInFirstPart < vowelPositionInSecondPart
+      ? vowelPositionInFirstPart
+      : vowelPositionInFirstPart + vowelPositionInSecondPart - 1;
+
+  return (
+    word.slice(0, vowelPosition) +
+    String.fromCharCode(SOFT_HYPHEN) +
+    word.slice(vowelPosition)
+  );
+};
+
+const splitWordAtMiddle = (_word) => {
+  const position = Math.ceil(_word.length / WORD_HALF);
+  return [_word.slice(0, position), _word.slice(position)];
+};
+
+const addHyphenAndSpaces = compose(
+  addHyphenAfterMiddleVowel,
+  addSpaceAfterComma,
+  addSpaceAfterDot,
+  addSpaceВeforeAfterBrackets,
+);
+const splitLongWord = (word) =>
+  word.length > LONG_NAME_THRESHOLD ? addHyphenAndSpaces(word) : word;
+
+const splitLongNames = (text) =>
+  text.split(spaceSymbol).map(splitLongWord).join(spaceSymbol).trim();
 
 const addSpaceToFirstAndLastQuote = (str) =>
   str.replace(/^([^"]*)"/, '$1 "').replace(/"([^"]*$)/, '" $1');
@@ -130,10 +124,7 @@ const getFormatedCompanyName = compose(
 const formatAdaptiveName = (companyName) =>
   getFormatedCompanyName(companyName) || companyName;
 
-const companyUrl = (code) => {
-  const correctedCode = padCodeWithLeadingZeros(code);
-  return code && isValidCompanyCode(code) && `/c/${correctedCode}`;
-};
+const companyUrl = (code) => code && isValidCompanyCode(code) && `/c/${code}`;
 
 const transformCompany = ({ name, code }) => ({
   value: formatAdaptiveName(name),
@@ -143,35 +134,34 @@ const transformCompany = ({ name, code }) => ({
 const formatKvedClass = ([, word, ...rest]) =>
   `${capitalizeWord(word)} ${rest.join(spaceSymbol).toLowerCase()}`;
 
+const getValidPageName = (page) => page.shortName || page.fullName || page.name;
+
+const transformPages = (acc, page) => {
+  if (!page) return acc;
+
+  const { code } = page;
+  const name = getValidPageName(page);
+
+  if (code && name) acc.push({ code, name });
+
+  return acc;
+};
+
 const formatPagesSlider = (pages) => {
   if (!pages || pages.length === 0) return [];
-
-  const getValidPageName = (page) =>
-    page.shortName || page.fullName || page.name;
-
-  const transformPages = (acc, page) => {
-    if (!page) return acc;
-
-    const { code } = page;
-    const name = getValidPageName(page);
-
-    if (code && name) acc.push({ code, name });
-
-    return acc;
-  };
 
   return pages.reduce(transformPages, []);
 };
 
-const formatActivities = (activities) => {
-  const MAX_LENGTH = 150;
-
-  const secondaryActivities = activities
+const getSecondaryActivities = (activities) =>
+  activities
     .filter(({ isPrimary }) => !isPrimary)
     .map(({ name }) => capitalizeWord(name))
     .join(", ");
 
-  return secondaryActivities.length > MAX_LENGTH
+const formatActivities = (activities) => {
+  const secondaryActivities = getSecondaryActivities(activities);
+  return secondaryActivities.length
     ? [{ value: secondaryActivities, truncate: true }]
     : secondaryActivities;
 };
