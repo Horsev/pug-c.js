@@ -1,7 +1,7 @@
 import { formatLocalCurrency } from "../helpers/numbers.js";
 
 import {
-  formatAdaptiveName,
+  formatedCompanyName,
   getShortForm,
   formatKvedClass,
   transformCompany,
@@ -78,7 +78,7 @@ const faqMapper = ({ companyName, edrpou, capital }) => [
 const companyRegistryConfig = [
   {
     companyName: ({ shortName, fullName }) =>
-      formatAdaptiveName(shortName || getShortForm(fullName)),
+      formatedCompanyName(shortName || getShortForm(fullName)),
   },
   { fullName: ({ fullName = "" }) => fullName },
   { ceoName: ({ ceoName = "" }) => ceoName },

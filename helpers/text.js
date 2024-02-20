@@ -22,7 +22,7 @@ import { formatLocalCurrency } from "./numbers.js";
 
 export {
   getShortForm,
-  formatAdaptiveName,
+  formatedCompanyName,
   formatKvedClass,
   transformCompany,
   formatPagesSlider,
@@ -121,13 +121,13 @@ const getFormatedCompanyName = compose(
   addSpaceToFirstAndLastQuote,
 );
 
-const formatAdaptiveName = (companyName) =>
+const formatedCompanyName = (companyName) =>
   getFormatedCompanyName(companyName) || companyName;
 
 const companyUrl = (code) => code && isValidCompanyCode(code) && `/c/${code}`;
 
 const transformCompany = ({ name, code }) => ({
-  value: formatAdaptiveName(name),
+  value: formatedCompanyName(name),
   link: companyUrl(code),
 });
 
@@ -213,7 +213,7 @@ const getSubtitleRegistry = (cell) => {
 
   switch (cell.key) {
     case "fullName":
-      subtitle = formatAdaptiveName(
+      subtitle = formatedCompanyName(
         titleToLowerCase(normalizeQuotes(cell.subtitle)),
       );
       break;

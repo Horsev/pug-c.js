@@ -1,3 +1,5 @@
+import { COMPANY_CODE_LENGTH } from "../constants/index.js";
+
 export { isValidCompanyCode, isCompanyCode };
 
 const LOWER_BOUND = 30000000;
@@ -6,7 +8,6 @@ const UPPER_BOUND = 60000000;
 const MODULUS_BASE = 11;
 const DIGIT_RANGE = 10;
 
-const COMPANY_CODE_LENGTH = 8;
 const CODE_PATTERN = new RegExp(`^[0-9]{${COMPANY_CODE_LENGTH}}$`);
 
 const getRange = (code) =>
