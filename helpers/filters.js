@@ -3,10 +3,15 @@ import markdownit from "markdown-it";
 
 export { faIcon, noNewline, uglifyJS, markdownIt };
 
+const reHTMLComments = /<!--[\s\S]*?-->/g;
+const reMultiSpace = /\s+/g;
+
 const setAtributes = (svgClass, pathFill) => (svgString) =>
   svgString
     .replace(/<svg([^>]+)>/, `<svg$1 class="${svgClass}">`)
-    .replace(/<path([^>]+)>/, `<path$1 fill="${pathFill}">`);
+    .replace(/<path([^>]+)(\/)>/, `<path$1 fill="${pathFill}" />`)
+    .replace(reHTMLComments, "")
+    .replace(reMultiSpace, " ");
 
 const faIcon = setAtributes("svg-inline--fa", "currentColor");
 
