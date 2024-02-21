@@ -1,5 +1,3 @@
-export { r };
-
 const r = (re, flags = "u") =>
   new RegExp(
     re
@@ -8,3 +6,5 @@ const r = (re, flags = "u") =>
       .replace(/\s/gm, ""),
     flags,
   );
+
+export default r;

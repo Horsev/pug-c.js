@@ -1,33 +1,17 @@
-import { UA_ALPHABET, COMPANY_CODE_LENGTH } from "../constants/index.js";
-
 export {
-  getFirstWord,
-  normalizeQuotes,
-  capitalizeWord,
   removeMultiSpaces,
-  capitalizeString,
-  padCodeWithLeadingZeros,
   replaceSeparator,
-  removeNonDigits,
-  addSpaceAfterComma,
-  addSpaceAfterDot,
-  addSpaceВeforeAfterBrackets,
+  addSpaceAfterSymbol,
+  addSpaceBeforeSymbol,
+  splitString,
   toLowerCase,
+  removeNonDigits,
+  replaceRegex,
 };
+
+const splitString = (separator) => (string) => string.split(separator);
 
 const toLowerCase = (str) => str.toLowerCase();
-
-const addSpaceAfterComma = (str) => str.replace(/,([^ ])/g, ", $1");
-
-const addSpaceAfterDot = (str) => str.replace(/\.([^ ])/g, ". $1");
-
-const addSpaceВeforeAfterBrackets = (str) =>
-  str.replace(/([^\s])(\()/g, "$1 $2").replace(/(\))([^\s])/g, "$1 $2");
-
-const removeNonDigits = (str) => {
-  const reNonDigits = /\D+/g;
-  return str.replace(reNonDigits, "");
-};
 
 const joinSeparators = (separators) => (acc, val, index) =>
   acc + (val + (separators[index] || ""));
@@ -40,22 +24,28 @@ const replaceSeparator = (separator, separators) => (string) => {
     : string;
 };
 
-const reMultiSpaces = /\s+/g;
-const replaceRegex = (re, value) => (string) => string.replace(re, value);
-const removeMultiSpaces = replaceRegex(reMultiSpaces, " ");
-
-const getFirstWord = (str = "") => {
-  const [firstWord] = str.split(" ");
-  return firstWord;
+const removeNonDigits = (str) => {
+  const reNonDigits = /\D+/g;
+  return str.replace(reNonDigits, "");
 };
 
-const normalizeQuotes = (text) => text.replace(/[«»“”]/gi, '"');
+const reMultiSpaces = /\s+/g;
 
-const capitalizeWord = ([firstLetter = "", ...rest]) =>
-  firstLetter && firstLetter.toUpperCase() + rest.join("").toLowerCase();
+const replaceRegex = (re, value) => (string) => string.replace(re, value);
 
-const capitalizeString = (string) =>
-  string.replace(UA_ALPHABET, capitalizeWord);
+const removeMultiSpaces = replaceRegex(reMultiSpaces, " ");
 
-const padCodeWithLeadingZeros = (code, length = COMPANY_CODE_LENGTH) =>
-  String(code).padStart(length, "0");
+const escapedSymbol = (symbol) =>
+  symbol.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+
+const addSpaceAfterSymbol = (symbol) => (str) =>
+  str.replace(
+    new RegExp(`${escapedSymbol(symbol)}(?!\\s|$)`, "g"),
+    `${symbol} `,
+  );
+
+const addSpaceBeforeSymbol = (symbol) => (str) =>
+  str.replace(
+    new RegExp(`(?<!^|\\s)${escapedSymbol(symbol)}`, "g"),
+    ` ${symbol}`,
+  );

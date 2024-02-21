@@ -1,5 +1,5 @@
 import { faIcon, noNewline, uglifyJS } from "../helpers/filters.js";
-import fullCompany from "../data/c.js";
+import pageData from "../data/c.js";
 
 const { APIKEY, API_DOMAIN, API_PATH } = process.env;
 
@@ -29,13 +29,13 @@ const createCompanyPage = async (request, result) => {
     const { data } = await response.json();
 
     templateData = {
-      ...fullCompany(data),
+      ...pageData(data),
       filters,
     };
   } catch ({ message }) {
     templateData = {
       error: true,
-      message,
+      message: `Помилка: ${message}`,
       filters,
     };
   } finally {

@@ -32,12 +32,12 @@ const humanizeDate = (locale, options) => (datetime) =>
 const MINUTES_TO_ROUND = 5;
 
 const formatUpdateTime = (date) => {
-  const dateTime = roundDatetimeDown(new Date(date), MINUTES_TO_ROUND);
-  const dateTimeValue = humanizeDate(LOCALE, datetimeOptions)(dateTime);
+  const datetime = roundDatetimeDown(new Date(date), MINUTES_TO_ROUND);
+  const text = humanizeDate(LOCALE, datetimeOptions)(datetime);
 
   return {
-    dateTime,
-    dateTimeValue,
+    datetime,
+    text,
   };
 };
 

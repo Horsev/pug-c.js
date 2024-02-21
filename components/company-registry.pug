@@ -1,0 +1,32 @@
+include ./section.pug
+  hgroup
+    h3 Реєстраційні дані
+  //- pre=JSON.stringify(registryData, null, 2)
+
+  dl.row.g-2.odb-mb--2(itemscope, itemtype="https://schema.org/Organization")
+    each item in registryData
+      .col(class=item.class)
+        dt.fw-normal.text-body-tertiary=item.name
+
+          if item.value
+            dd(data-odb-truncate-target=item.truncateId itemprop=item.itemprop)
+              if item.value.datetime
+                time(datetime=item.value.datetime)=item.value.text
+
+              else if item.value.data
+                data(value=item.value.data)=item.value.text
+
+              else if item.value.link
+                a.link-offset-2(href=item.value.link)=item.value.text
+
+              else
+                p.mb-0=item.value.text
+
+          else if item.values
+            dd( itemprop=item.itemprop)
+              each value in item.values
+                p.mb-1
+                  if value.link
+                    a.link-offset-2(href=value.link)=value.text
+                  else
+                    =value.text

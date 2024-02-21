@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export { formatLocalCurrency, formatLocalNumber };
 
 const { LOCALE, CURRENCY } = process.env;
@@ -16,8 +15,6 @@ const getLocalCurrency = (locale, currency) =>
 const { format: localCurrency } = getLocalCurrency(LOCALE, CURRENCY);
 
 const formatLocalCurrency = (amount) => localCurrency(amount);
-
-// Refactor: convertToHumanCurrency › formatLocalCurrency();
 
 const getLocalNumber = (locale) => (maximumSignificantDigits) =>
   new Intl.NumberFormat(locale, { maximumSignificantDigits });

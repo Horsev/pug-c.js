@@ -1,19 +1,33 @@
 import { minify } from "uglify-js";
 import markdownit from "markdown-it";
 
+import { replaceRegex } from "./strings.js";
+
+import { compose } from "./fp.js";
+
 export { faIcon, noNewline, uglifyJS, markdownIt };
 
 const reHTMLComments = /<!--[\s\S]*?-->/g;
 const reMultiSpace = /\s+/g;
 
-const setAtributes = (svgClass, pathFill) => (svgString) =>
-  svgString
-    .replace(/<svg([^>]+)>/, `<svg$1 class="${svgClass}">`)
-    .replace(/<path([^>]+)(\/)>/, `<path$1 fill="${pathFill}" />`)
-    .replace(reHTMLComments, "")
-    .replace(reMultiSpace, " ");
+const addClassToSvgTag = (cssClass) =>
+  replaceRegex(/<svg([^>]+)>/, `<svg$1 class="${cssClass}">`);
 
-const faIcon = setAtributes("svg-inline--fa", "currentColor");
+const addAttributeFillToPathTag = (pathFill) =>
+  replaceRegex(/<path([^>]+)(\/)>/, `<path$1 fill="${pathFill}" />`);
+
+const removeHTMLComments = replaceRegex(reHTMLComments, "");
+
+const removeMultispaces = replaceRegex(reMultiSpace, " ");
+
+const faIconFilter = compose(
+  removeMultispaces,
+  removeHTMLComments,
+  addAttributeFillToPathTag("currentColor"),
+  addClassToSvgTag("svg-inline--fa"),
+);
+
+const faIcon = faIconFilter;
 
 const noNewline = (html) => html.replace(/\n/g, " ");
 

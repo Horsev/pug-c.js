@@ -30,8 +30,8 @@ const getUAPhoneNumber = (phone) => {
   if (!code || !number) return null;
 
   return {
-    value: formatPhone(phone),
     link: `tel:+380${code}${number}`,
+    text: formatPhone(phone),
   };
 };
 

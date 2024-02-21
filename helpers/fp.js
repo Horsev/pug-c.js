@@ -1,5 +1,3 @@
-import { compose } from "ramda";
+import { compose, pipe } from "ramda";
 
-export { compose, hasKey };
-
-const hasKey = (key) => (obj) => obj[key] !== undefined;
+export { compose, pipe };
