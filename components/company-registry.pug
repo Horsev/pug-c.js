@@ -17,7 +17,10 @@ include ./section.pug
                 data(value=item.value.data)=item.value.text
 
               else if item.value.link
-                a.link-offset-2(href=item.value.link)=item.value.text
+                a(href=item.value.link)=item.value.text
+
+              else if item.unescaped
+                p!=item.value.text
 
               else
                 p.mb-0=item.value.text
@@ -27,6 +30,6 @@ include ./section.pug
               each value in item.values
                 p.mb-1
                   if value.link
-                    a.link-offset-2(href=value.link)=value.text
+                    a(href=value.link)=value.text
                   else
                     =value.text

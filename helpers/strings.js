@@ -7,7 +7,18 @@ export {
   toLowerCase,
   removeNonDigits,
   replaceRegex,
+  capitalizeUAword,
+  capitalizeUAstring,
 };
+
+const uaAlphabet = "а-щьюя'ґєії";
+const uaLetters = new RegExp(`[${uaAlphabet}]+`, "gi");
+
+const capitalizeUAword = ([firstLetter, ...rest]) =>
+  firstLetter.toUpperCase() + rest.join("").toLowerCase();
+
+const capitalizeUAstring = (string) =>
+  string.replace(uaLetters, capitalizeUAword);
 
 const splitString = (separator) => (string) => string.split(separator);
 

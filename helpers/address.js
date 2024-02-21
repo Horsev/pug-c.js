@@ -1,60 +1,16 @@
-export {
-  UA_ALPHABET,
-  COMPANY_CODE_LENGTH,
-  UA_VOWELS,
-  SHORT_ORGANIZATION_FORMS,
-  CITIES_CODES,
-  КАТОТТГ_FIRST_LEVEL_CODES,
-};
+import r from "./regex.js";
+import {
+  toLowerCase,
+  capitalizeUAword,
+  removeMultiSpaces,
+  replaceRegex,
+  addSpaceAfterSymbol,
+} from "./strings.js";
+import { compose } from "./fp.js";
 
-const UA_ALPHABET = "а-щьюя'ґєії";
+const reAlphabetUA = "[a-щьюяґєії]";
 
-const COMPANY_CODE_LENGTH = 8;
-
-const UA_VOWELS = "ОАИЕУЯЮЯЄІЇ";
-
-const КАТОТТГ_FIRST_LEVEL_CODES = [
-  "01",
-  "05",
-  "07",
-  "12",
-  "14",
-  "18",
-  "21",
-  "23",
-  "26",
-  "32",
-  "35",
-  "44",
-  "46",
-  "48",
-  "51",
-  "53",
-  "56",
-  "59",
-  "61",
-  "63",
-  "65",
-  "68",
-  "71",
-  "73",
-  "74",
-  "80",
-  "85",
-];
-
-const SHORT_ORGANIZATION_FORMS = {
-  "товариство з обмеженою відповідальністю": "ТОВ",
-  "фермерське господарство": "ФГ",
-  "приватне акціонерне товариство": "ПРАТ",
-  "публічне акціонерне товариство": "ПАТ",
-  "акціонерне товариство": "АТ",
-  "громадська організація": "ГО",
-  "комунальне підприємство": "КП",
-  "приватне підприємство": "ПП",
-};
-
-const CITIES_CODES = {
+const КАТОТТГ = {
   "місто Дніпро": "UA12020010010037010",
   "місто Кам'янське": "UA12040150010056523",
   "місто Кривий Ріг": "UA12060170010065850",
@@ -140,3 +96,102 @@ const CITIES_CODES = {
   "місто Гірник": "UA14160110020099716",
   "місто Маріуполь": "UA14140050010029262",
 };
+
+const getAddress = (address) => {
+  const { zip, country, parts } = address;
+  const { atu, street, houseType, house, flat, numType, num } = parts;
+
+  const [settlement, ...atuRest] = atu.split(", ").reverse();
+
+  const formatSettelment = (string) =>
+    КАТОТТГ[string] ? `<a href="/c/${КАТОТТГ[string]}">${string}</a>` : string;
+
+  const reSplitNumberLetter = r(
+    String.raw`
+    ^
+      (?
+        <houseNumber>\d+
+      )
+        #Optional
+        (
+          [-\s]
+        )?
+      (?
+        <houseLetter>${reAlphabetUA}+
+      )?$
+      `,
+  );
+
+  const formatHouse = ({ houseNumber, houseLetter }) =>
+    `${houseNumber}${houseLetter ? `<sup>${houseLetter}</sup>` : ""}`;
+
+  const parsedHouse = reSplitNumberLetter.test(house)
+    ? house.toLowerCase().match(reSplitNumberLetter).groups
+    : { houseNumber: house };
+
+  const abbrivationsExplanations = {
+    вул: "вулиця",
+    просп: "проспект",
+    пл: "площа",
+    пров: "провулок",
+    пер: "перехрестя",
+    бульв: "бульвар",
+    наб: "набережна",
+    узв: "узвіз",
+    Шосе: "шосе",
+  };
+
+  const streetAbbrivations = Object.keys(abbrivationsExplanations);
+
+  const reStreetAbbrivations = new RegExp(
+    `(${streetAbbrivations.join("|")}).`,
+    "i",
+  );
+
+  const getAbbrivationKey = (string) => toLowerCase(string.replace(".", ""));
+
+  const expandAbbrivation = (string) =>
+    abbrivationsExplanations[getAbbrivationKey(string)] || string;
+
+  const expandStreetAbbrivation = replaceRegex(
+    reStreetAbbrivations,
+    expandAbbrivation,
+  );
+
+  const streetTypes = Object.values(abbrivationsExplanations);
+  const reStreetType = new RegExp(streetTypes.join("|"), "i");
+
+  const normalizeStreetPart = (string) =>
+    reStreetType.test(string) ? toLowerCase(string) : capitalizeUAword(string);
+
+  const getNormalizedStreet = (string) =>
+    string.split(" ").map(normalizeStreetPart).join(" ");
+
+  const formatStreetHTML = (string) =>
+    string ? `<b>${string}</b>` : undefined;
+
+  const formatStreet = compose(
+    formatStreetHTML,
+    getNormalizedStreet,
+    expandStreetAbbrivation,
+    removeMultiSpaces,
+    addSpaceAfterSymbol("."),
+  );
+
+  const addressParts = [
+    zip,
+    country,
+    ...atuRest,
+    formatSettelment(settlement),
+    formatStreet(street),
+    houseType,
+    formatHouse(parsedHouse),
+    flat,
+    numType,
+    num,
+  ];
+  const addressString = addressParts.filter(Boolean).join(", ");
+  return addressString;
+};
+
+export default getAddress;

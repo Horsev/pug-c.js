@@ -3,6 +3,8 @@ import {
   formatCompanyNameEn,
 } from "../helpers/company-name.js";
 
+import getAddress from "../helpers/address.js";
+
 import { formatUpdateTime, getNumericDate } from "../helpers/date.js";
 import getUAPhoneNumber from "../helpers/phones.js";
 import { formatLocalCurrency } from "../helpers/numbers.js";
@@ -94,8 +96,9 @@ const companyRegistryMapper = ({
     class: "col-12",
     itemprop: "address",
     value: {
-      text: location || address,
+      text: getAddress(address) || location,
     },
+    unescaped: true,
   },
   {
     name: "Пошта",
