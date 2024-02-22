@@ -138,17 +138,20 @@ const getAddress = (address) => {
     бульв: "бульвар",
     наб: "набережна",
     узв: "узвіз",
-    Шосе: "шосе",
+    шосе: "шосе",
+    пр: "проспект",
   };
 
   const streetAbbrivations = Object.keys(abbrivationsExplanations);
 
   const reStreetAbbrivations = new RegExp(
-    `(${streetAbbrivations.join("|")}).`,
+    `(${streetAbbrivations.join(".|")}.)`,
     "i",
   );
 
-  const getAbbrivationKey = (string) => toLowerCase(string.replace(".", ""));
+  const removeDot = replaceRegex(".", "");
+
+  const getAbbrivationKey = compose(toLowerCase, removeDot);
 
   const expandAbbrivation = (string) =>
     abbrivationsExplanations[getAbbrivationKey(string)] || string;
@@ -178,7 +181,7 @@ const getAddress = (address) => {
     addSpaceAfterSymbol("."),
   );
 
-  const addressParts = [
+  const addressPartsHTML = [
     zip,
     country,
     ...atuRest,
@@ -190,8 +193,24 @@ const getAddress = (address) => {
     numType,
     num,
   ];
-  const addressString = addressParts.filter(Boolean).join(", ");
-  return addressString;
+
+  const addressPartsText = [
+    zip,
+    country,
+    ...atuRest,
+    settlement,
+    street,
+    houseType,
+    formatHouse(parsedHouse),
+    flat,
+    numType,
+    num,
+  ];
+
+  const addressText = addressPartsText.filter(Boolean).join(", ");
+  const addressHTML = addressPartsHTML.filter(Boolean).join(", ");
+
+  return { addressText, addressHTML };
 };
 
 export default getAddress;

@@ -1,6 +1,7 @@
 import express, { static as staticFolder } from "express";
 import compression from "compression";
 import createCompanyPage from "./api/c.js";
+import createCompanyMobilePage from "./api/c-m.js";
 import createHelpPage from "./api/help.js";
 import createErrorPage from "./api/error.js";
 
@@ -18,6 +19,8 @@ app.set("view engine", "pug");
 app.use(staticFolder("public"));
 
 app.get("/c/:code", createCompanyPage);
+app.get("/c-m/:code", createCompanyMobilePage);
+
 app.get("/help", createHelpPage);
 app.get("/error", createErrorPage("Це помилка, яку ми не можемо вирішити"));
 

@@ -38,7 +38,7 @@ const solve3QuotesProblem = (lang) => (string) => {
   //               _               ⬇️  _
   // 03188375 - КЗ "ІЛЛІНСЬКИЙ ПНІ" ДОР"
   //
-  // 45388253 - LLC "FIF "EURO CAPITAL HOLDING""
+  // 45388253 - LLC "FIF "EURO CAPITAL HOLDING"
 
   const separator = '"';
   const numberOfQuotes = 3;

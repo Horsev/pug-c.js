@@ -27,7 +27,10 @@ const getWebPageDomain = (webPageDomain) => ({
   text: toLowerCase(webPageDomain),
 });
 
-const getPhones = (phones) => phones.map(getUAPhoneNumber).filter(Boolean);
+const getPhones = (phones) => {
+  const formatedPhones = phones.map(getUAPhoneNumber).filter(Boolean);
+  return formatedPhones.length ? formatedPhones : undefined;
+};
 
 const secondaryActivity = ({ isPrimary }) => !isPrimary;
 const primaryActivity = ({ isPrimary }) => isPrimary;
@@ -96,7 +99,8 @@ const companyRegistryMapper = ({
     class: "col-12",
     itemprop: "address",
     value: {
-      text: getAddress(address) || location,
+      text: getAddress(address).addressText || location,
+      html: getAddress(address).addressHTML || location,
     },
     unescaped: true,
   },

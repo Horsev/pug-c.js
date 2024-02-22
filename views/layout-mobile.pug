@@ -1,0 +1,33 @@
+doctype html
+html(lang="uk")
+  head
+    title Опендатабот
+    link(rel="stylesheet", href="/css/theme.css")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(
+      name="description",
+      content="Опендатабот — сервіс моніторингу реєстраційних даних українських компаній та судового реєстру для захисту від рейдерських захоплень і контролю контрагентів."
+    )
+
+    link(rel='apple-touch-icon' sizes='180x180' href='/i/apple-touch-icon.png')
+    link(rel='icon' type='image/png' sizes='32x32' href='/i/favicon-32x32.png')
+    link(rel='icon' type='image/png' sizes='16x16' href='/i/favicon-16x16.png')
+    link(rel='manifest' href='/site.webmanifest')
+    link(rel='mask-icon' href='/i/safari-pinned-tab.svg' color='#5bbad5')
+    meta(name='msapplication-TileColor' content='#2d89ef')
+    meta(name='theme-color' content='#f8f9fa')
+
+    script(
+      src="https://kit.fontawesome.com/5df4f01409.js",
+      crossorigin="anonymous"
+    )
+
+    script
+      include:uglify-js ../browser/theme.js
+
+
+  body.bg-body-tertiary
+    block content
+    script
+      include:uglify-js ../browser/truncate.js
+
