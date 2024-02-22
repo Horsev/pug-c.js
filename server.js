@@ -16,7 +16,8 @@ const startingMessage = `\nServer is running on http://localhost:${PORT}/c/00034
 
 app.set("view engine", "pug");
 
-app.use(staticFolder("public"));
+app.use(staticFolder("browser/public"));
+app.set("views", "browser/views");
 
 app.get("/c/:code", createCompanyPage);
 app.get("/c-m/:code", createCompanyMobilePage);

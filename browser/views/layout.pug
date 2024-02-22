@@ -1,7 +1,7 @@
 doctype html
 html(lang="uk")
   head
-    title Опендатабот — помилка
+    title Опендатабот
     link(rel="stylesheet", href="/css/theme.css")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     meta(
@@ -17,13 +17,26 @@ html(lang="uk")
     meta(name='msapplication-TileColor' content='#2d89ef')
     meta(name='theme-color' content='#f8f9fa')
 
+    script(
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js",
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL",
+      crossorigin="anonymous"
+    )
+
+    script(
+      src="https://kit.fontawesome.com/5df4f01409.js",
+      crossorigin="anonymous"
+    )
+
     script
-      include:uglify-js ../browser/theme.js
-  
+      include:uglify-js ../js/_framework.js
+      include:uglify-js ../js/theme.js
+
 
   body.bg-body-tertiary
-    section.container.p-5
-      .fs-1.mb-3 
-        include:fa-icon:no-newline ../img/fa/fa-notdef.svg
-      h1= message
-      a.link-body-emphasis.link-offset-2.link-underline-opacity-10.link-underline-opacity-75-hover(href='/') Повернутися на головну
+    block content
+    script
+      include:uglify-js ../js/truncate.js
+      include:uglify-js ../js/suggests.js
+      include:uglify-js ../js/search.js
+
