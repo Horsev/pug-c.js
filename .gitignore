@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
+fontawesome/
 
 # dotenv environment variables file
 config.env

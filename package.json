@@ -5,19 +5,24 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "npm run sass && npm run purgecss",
     "start": "node --env-file=config.env --watch server.js",
+    "purgecss": "purgecss --css ./browser/public/css/theme.css --content ./browser/**/*.pug  --output ./browser/public/css --config ./purgecss.config.cjs",
+    "sass": "sass ./scss/theme.sass ./browser/public/css/theme.css --style compressed",
     "prettier:pug": "npx prettier --write \"**/*.pug\"",
-    "watch:sass": "sass --watch ./scss/theme.sass ./public/css/theme.css --style compressed"
+    "watch:sass": "sass --watch ./scss/theme.sass ./browser/public/css/theme.css --style compressed"
   },
   "author": "Andrey Horsev",
   "license": "ISC",
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^5.0.0",
     "bootstrap": "^5.3.2",
     "compression": "^1.7.4",
     "express": "^4.0.0",
     "hyphen": "^1.10.4",
     "markdown-it": "^14.0.0",
     "pug": "^3.0.0",
+    "purgecss-from-pug": "^5.0.0",
     "ramda": "^0.29.1",
     "uglify-js": "^3.17.4"
   },

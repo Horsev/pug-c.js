@@ -12,3 +12,7 @@ API_PATH=/api/v3/full-company-open-data
 PORT=8080
 APIKEY=your_api_key
 ```
+
+4. Start server
+   `npm run build`
+   `npm run start`
