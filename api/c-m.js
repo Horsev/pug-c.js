@@ -39,7 +39,7 @@ const createCompanyMobilePage = async (request, result) => {
       filters,
     };
   } finally {
-    const template = templateData.error ? "error.pug" : "c-m.pug";
+    const template = templateData.error ? "error.pug" : "mobile/c.pug";
     result.render(template, templateData);
   }
 };
