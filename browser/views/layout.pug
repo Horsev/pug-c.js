@@ -1,15 +1,33 @@
 doctype html
 html(lang="uk")
   head
-    title Опендатабот
     link(rel="stylesheet", href="/css/theme.css")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    
+
+    title=SEO.title
+
     meta(
-      name="description",
-      content="Опендатабот — сервіс моніторингу реєстраційних даних українських компаній та судового реєстру для захисту від рейдерських захоплень і контролю контрагентів."
+      name="keywords",
+      content=SEO.keywords
     )
 
+    meta(
+      name="description",
+      content=SEO.description
+    )
+    //- Open graph meta tags
+    meta(property="og:title", content=SEO.og.title)
+    meta(property="og:description", content=SEO.og.description)
+    meta(property="og:image", content=SEO.og.image)
+    meta(property="og:url", content=SEO.og.url)
+
+    //- Twitter meta tags
+    meta(name="twitter:title", content=SEO.twitter.title)
+    meta(name="twitter:description", content=SEO.twitter.description)
+    meta(name="twitter:image", content=SEO.twitter.image)
+    meta(name="twitter:url", content=SEO.twitter.url)
+
+    //- Favicon
     link(rel='apple-touch-icon' sizes='180x180' href='/i/apple-touch-icon.png')
     link(rel='icon' type='image/png' sizes='32x32' href='/i/favicon-32x32.png')
     link(rel='icon' type='image/png' sizes='16x16' href='/i/favicon-16x16.png')
@@ -21,7 +39,6 @@ html(lang="uk")
     script
       include:uglify-js ../js/_framework.js
       include:uglify-js ../js/theme.js
-
 
   body.bg-body-tertiary
     block content

@@ -35,7 +35,7 @@ const stores = [
   },
 ];
 
-const pageData = ({ registry }) => ({
+const getPageData = ({ registry }) => ({
   config: {
     messengers,
     stores,
@@ -45,4 +45,4 @@ const pageData = ({ registry }) => ({
   faq: getFaq(registry),
 });
 
-export default pageData;
+export default getPageData;

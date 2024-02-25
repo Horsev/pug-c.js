@@ -26,7 +26,7 @@ include ./section.pug
               p.mb-0=item.value.text
 
         else if item.values
-          dd( itemprop=item.itemprop)
+          dd(itemprop=item.itemprop)
             each value in item.values
               p.mb-1
                 if value.link

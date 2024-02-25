@@ -1,5 +1,6 @@
 import { faIcon, noNewline, uglifyJS } from "../filters/index.js";
-import pageData from "../data/c.js";
+import getPageData from "../data/c.js";
+import seoData from "../data/seo.js";
 
 const { APIKEY, API_DOMAIN, API_PATH } = process.env;
 
@@ -28,9 +29,12 @@ const createCompanyPage = async (request, result) => {
 
     const { data } = await response.json();
 
+    const pageData = getPageData(data);
+
     templateData = {
-      ...pageData(data),
+      ...pageData,
       filters,
+      SEO: seoData(data),
     };
   } catch ({ message }) {
     templateData = {

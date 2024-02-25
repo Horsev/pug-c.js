@@ -12,7 +12,8 @@
   const closeButton = document.querySelector("button[aria-label=Close]");
 
   if (!isShow) {
-    banner.classList.add("d-none");
+    banner.remove();
+    return;
   }
 
   const dontShowAgain = () => {
