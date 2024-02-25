@@ -25,7 +25,7 @@ header
             datalist#suggestions
 
             button.btn.px-md-3.btn-primary(title="Пошук", type="submit")
-              i.far.fa-search
+              include:fa-icon:no-newline ../../fontawesome/svgs/regular/magnifying-glass.svg
           .collapse#helpLink
             a.btn.btn-link(href='/help')
               | Як пошук працює? 
@@ -37,5 +37,6 @@ header
           aria-label="logout",
           rel="nofollow"
         )
-          i.far.fa-arrow-right-from-bracket
+          include:fa-icon:no-newline ../../fontawesome/svgs/regular/arrow-right-from-bracket.svg
+
           span.d-none.d-md-inline.ms-2 Вийти

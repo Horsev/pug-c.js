@@ -13,6 +13,8 @@ PORT=8080
 APIKEY=your_api_key
 ```
 
-4. Start server
+4. Download FontAwesome and put it in `fontawesome` folder
+
+5. Start server
    `npm run build`
    `npm run start`

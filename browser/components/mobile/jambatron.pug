@@ -11,10 +11,10 @@ include ../../components/section.pug
     menu.d-flex.flex-column.flex-sm-row.justify-content-center.d-print-none
       li
         button.btn.btn-lg.btn-primary.m-2(type="button")
-          i.far.fa-file-pdf.me-2
+          include:fa-icon(class="me-2"):no-newline ../../../fontawesome/svgs/regular/file-pdf.svg
           | Витяг з ЄДР
       li
         button.btn.btn-lg.m-2(type="button")
-          i.far.fa-file-pdf.me-2
+          include:fa-icon(class="me-2 odb-animate-spin"):no-newline ../../../fontawesome/svgs/regular/circle-notch.svg
           | Статут
 

@@ -4,14 +4,6 @@
 .odb-mb--2
   margin-bottom: -0.5rem
 
-// fontawesome
-i.far, .svg-inline--fa
-  display: inline-block
-  width: 1em
-  height: 1em
-  overflow: visible
-  vertical-align: -0.125em
-
 menu
   list-style: none
   padding-inline-start: 0
@@ -85,3 +77,12 @@ img.odb-img-themed
 
   40%, 60%
     transform: translate3d(4px, 0, 0)
+
+.odb-animate-spin
+  animation: spin 1s linear infinite
+
+@keyframes spin
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
