@@ -41,12 +41,15 @@ const getActivityLink = ({ name, code }) => ({
 });
 const separator = ", ";
 
-const getSecondaryActivities = (activities) => ({
-  text: activities
-    .filter(secondaryActivity)
-    .map(getActivityName)
-    .join(separator),
-});
+const getSecondaryActivities = (activities) =>
+  activities &&
+  activities.filter(secondaryActivity).length && {
+    text:
+      activities
+        .filter(secondaryActivity)
+        .map(getActivityName)
+        .join(separator) || undefined,
+  };
 
 const getPrimaryActivity = (activities) => {
   const [activityLink] = activities
@@ -86,7 +89,7 @@ const companyRegistryMapper = ({
   {
     name: "Компанія, до якої належить філіал",
     class: "col-12",
-    value: parentCompany && { text: getParentCompany(parentCompany) },
+    value: parentCompany && getParentCompany(parentCompany),
   },
   {
     name: "Назва англійською мовою",
@@ -160,8 +163,9 @@ const companyRegistryMapper = ({
   },
 ];
 
-const filterEmptyItems = (array) =>
-  array.filter(({ value, values }) => value || values);
+const removeEmpty = ({ value, values }) => value || values;
+
+const filterEmptyItems = (array) => array.filter(removeEmpty);
 
 const getCompanyRegistry = compose(filterEmptyItems, companyRegistryMapper);
 

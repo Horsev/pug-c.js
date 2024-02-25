@@ -1,4 +1,4 @@
-import { faIcon, noNewline, uglifyJS } from "../helpers/filters.js";
+import { faIcon, noNewline, uglifyJS } from "../filters/index.js";
 import pageData from "../data/c.js";
 
 const { APIKEY, API_DOMAIN, API_PATH } = process.env;

@@ -1,4 +1,4 @@
-import { uglifyJS, noNewline, markdownIt } from "../helpers/filters.js";
+import { markdownIt, noNewline, uglifyJS } from "../filters/index.js";
 
 const createHelpPage = async (request, result) => {
   const templateData = {
