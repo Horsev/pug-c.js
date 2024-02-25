@@ -15,15 +15,9 @@
     banner.classList.add("d-none");
   }
 
-  const { Collapse } = window.bootstrap;
-  const collapsed = new Collapse("#odb-open-in-app", {
-    toggle: false,
-  });
-
-  const closeBannerAndSaveStatus = () => {
-    collapsed.hide();
+  const dontShowAgain = () => {
     saveMobileBannerStatus({ isShow: false, date: new Date() });
   };
 
-  closeButton.addEventListener("click", closeBannerAndSaveStatus);
+  closeButton.addEventListener("click", dontShowAgain);
 })();
