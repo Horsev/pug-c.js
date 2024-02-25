@@ -49,14 +49,18 @@ const removeMultiSpaces = replaceRegex(reMultiSpaces, " ");
 const escapedSymbol = (symbol) =>
   symbol.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
 
-const addSpaceAfterSymbol = (symbol) => (str) =>
-  str.replace(
-    new RegExp(`${escapedSymbol(symbol)}(?!\\s|$)`, "g"),
-    `${symbol} `,
-  );
+const addSpaceAfterSymbol =
+  (symbol) =>
+  (str = "") =>
+    str.replace(
+      new RegExp(`${escapedSymbol(symbol)}(?!\\s|$)`, "g"),
+      `${symbol} `,
+    );
 
-const addSpaceBeforeSymbol = (symbol) => (str) =>
-  str.replace(
-    new RegExp(`(?<!^|\\s)${escapedSymbol(symbol)}`, "g"),
-    ` ${symbol}`,
-  );
+const addSpaceBeforeSymbol =
+  (symbol) =>
+  (str = "") =>
+    str.replace(
+      new RegExp(`(?<!^|\\s)${escapedSymbol(symbol)}`, "g"),
+      ` ${symbol}`,
+    );

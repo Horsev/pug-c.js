@@ -174,10 +174,10 @@ const getAddress = (address) => {
     string ? `<b>${string}</b>` : undefined;
 
   const formatStreet = compose(
-    formatStreetHTML,
-    getNormalizedStreet,
-    expandStreetAbbrivation,
-    removeMultiSpaces,
+    // formatStreetHTML,
+    // getNormalizedStreet,
+    // expandStreetAbbrivation,
+    // removeMultiSpaces,
     addSpaceAfterSymbol("."),
   );
 
