@@ -8,31 +8,31 @@ include ./section.pug
       .col(class=item.class)
         dt.fw-normal.text-body-tertiary=item.name
 
-          if item.value
-            dd(data-odb-truncate-target=item.truncateId itemprop=item.itemprop)
-              if item.value.datetime
-                time(datetime=item.value.datetime)=item.value.text
+        if item.value
+          dd(data-odb-truncate-target=item.truncateId itemprop=item.itemprop)
+            if item.value.datetime
+              time(datetime=item.value.datetime)=item.value.text
 
-              else if item.value.data
-                data(value=item.value.data)=item.value.text
+            else if item.value.data
+              data(value=item.value.data)=item.value.text
 
-              else if item.value.link
-                a(href=item.value.link)=item.value.text
+            else if item.value.link
+              a(href=item.value.link)=item.value.text
 
-              else if item.unescaped
-                p!=item.value.html
+            else if item.unescaped
+              p!=item.value.html
 
-              else
-                p.mb-0=item.value.text
+            else
+              p.mb-0=item.value.text
 
-          else if item.values
-            dd( itemprop=item.itemprop)
-              each value in item.values
-                p.mb-1
-                  if value.link
-                    a(href=value.link)=value.text
-                  else
-                    =value.text
+        else if item.values
+          dd( itemprop=item.itemprop)
+            each value in item.values
+              p.mb-1
+                if value.link
+                  a(href=value.link)=value.text
+                else
+                  =value.text
 
 //- css safe list 
 .col-12.col-6.col-md-6.col-lg-4.col-md-4
