@@ -14,7 +14,7 @@ export {
 const uaAlphabet = "а-щьюя'ґєії";
 const uaLetters = new RegExp(`[${uaAlphabet}]+`, "gi");
 
-const capitalizeUAword = ([firstLetter, ...rest]) =>
+const capitalizeUAword = ([firstLetter = "", ...rest]) =>
   firstLetter.toUpperCase() + rest.join("").toLowerCase();
 
 const capitalizeUAstring = (string) =>
@@ -42,7 +42,10 @@ const removeNonDigits = (str) => {
 
 const reMultiSpaces = /\s+/g;
 
-const replaceRegex = (re, value) => (string) => string.replace(re, value);
+const replaceRegex =
+  (re, value) =>
+  (string = "") =>
+    string.replace(re, value);
 
 const removeMultiSpaces = replaceRegex(reMultiSpaces, " ");
 

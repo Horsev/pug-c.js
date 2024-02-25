@@ -97,7 +97,7 @@ const КАТОТТГ = {
   "місто Маріуполь": "UA14140050010029262",
 };
 
-const getAddress = (address) => {
+const getAddress = (address = "") => {
   const { zip, country, parts } = address;
   const { atu, street, houseType, house, flat, numType, num } = parts;
 
@@ -123,7 +123,9 @@ const getAddress = (address) => {
   );
 
   const formatHouse = ({ houseNumber, houseLetter }) =>
-    `${houseNumber}${houseLetter ? `<sup>${houseLetter}</sup>` : ""}`;
+    houseNumber
+      ? houseNumber + (houseLetter ? `<sup>${houseLetter}</sup>` : "")
+      : undefined;
 
   const parsedHouse = reSplitNumberLetter.test(house)
     ? house.toLowerCase().match(reSplitNumberLetter).groups
@@ -153,7 +155,7 @@ const getAddress = (address) => {
 
   const getAbbrivationKey = compose(toLowerCase, removeDot);
 
-  const expandAbbrivation = (string) =>
+  const expandAbbrivation = (string = "") =>
     abbrivationsExplanations[getAbbrivationKey(string)] || string;
 
   const expandStreetAbbrivation = replaceRegex(
@@ -164,20 +166,20 @@ const getAddress = (address) => {
   const streetTypes = Object.values(abbrivationsExplanations);
   const reStreetType = new RegExp(streetTypes.join("|"), "i");
 
-  const normalizeStreetPart = (string) =>
+  const normalizeStreetPart = (string = "") =>
     reStreetType.test(string) ? toLowerCase(string) : capitalizeUAword(string);
 
-  const getNormalizedStreet = (string) =>
+  const getNormalizedStreet = (string = "") =>
     string.split(" ").map(normalizeStreetPart).join(" ");
 
-  const formatStreetHTML = (string) =>
+  const formatStreetHTML = (string = "") =>
     string ? `<b>${string}</b>` : undefined;
 
   const formatStreet = compose(
-    // formatStreetHTML,
-    // getNormalizedStreet,
-    // expandStreetAbbrivation,
-    // removeMultiSpaces,
+    formatStreetHTML,
+    getNormalizedStreet,
+    expandStreetAbbrivation,
+    removeMultiSpaces,
     addSpaceAfterSymbol("."),
   );
 
