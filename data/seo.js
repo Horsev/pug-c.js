@@ -1,7 +1,7 @@
 const seoData = ({ registry }) => ({
   title: `${registry.code} — ${registry.shortName || registry.fullName} — Опендатабот`,
   description: `Інформація про юридичну особу ${registry.shortName || registry.fullName} Реквізити ⚡ Код ЄДРПОУ ${registry.code} ⚡ ${registry.location} ⚡ Керівник ${registry.ceoName}`,
-  keywords: `компанія, ${registry.shortName || registry.fullName}, реєстр, ЄДРПОУ`,
+  keywords: `компанія, ${registry.shortName || registry.fullName}, реєстр, ЄДРПОУ ${registry.code}`,
   canonical: `https://opendatabot.com/c/${registry.code}`,
 
   og: {

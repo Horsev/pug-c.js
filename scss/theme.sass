@@ -42,3 +42,10 @@ $accordion-button-bg: var(--#{$prefix}tertiary-bg)
 // 8. Add additional custom code here
 @import  "fontawesome.sass"
 @import  "misc.sass"
+
+.rounded
+  border-radius: 0!important
+
+@include media-breakpoint-up(sm)
+  .rounded
+    border-radius: var(--bs-border-radius)!important

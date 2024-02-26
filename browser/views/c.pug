@@ -2,13 +2,14 @@ extends layout.pug
 
 block content
   include ../components/mobile-banner.pug
-  .container
-    include ../components/header.pug
-    
+
+  include ../components/header.pug
+  
+  main  
     include ../components/jambatron.pug
     include ../components/company-registry.pug
 
-    include ../components/promotion.pug
+  include ../components/promotion.pug
 
-    include ../components/faq.pug
-    include ../components/footer.pug
+  include ../components/faq.pug
+  include ../components/footer.pug
